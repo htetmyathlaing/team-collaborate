@@ -1832,6 +1832,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1914,20 +1923,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {};
-    },
+        data: function data() {
+                return {
+                        isLooked: false
+                };
+        },
 
-    methods: {
-        test: function test() {
-            __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].$emit('test');
+        methods: {
+                test: function test() {
+                        __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].$emit('test');
+                        this.isLooked = true;
+                }
+        },
+        computed: {
+                notification: function notification() {
+                        return __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].notification;
+                }
         }
-    },
-    computed: {
-        notification: function notification() {
-            return __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].notification;
-        }
-    }
 });
 
 /***/ }),
@@ -6018,7 +6030,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -42069,7 +42081,11 @@ var render = function() {
         })
       ],
       2
-    )
+    ),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -42090,6 +42106,30 @@ var staticRenderFns = [
     return _c("h5", [
       _c("a", { staticClass: "text-white", attrs: { href: "#" } }, [
         _vm._v("Direct Messages")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "announcement mt-3" }, [
+      _c("h5", [
+        _c("a", { staticClass: "text-white", attrs: { href: "#" } }, [
+          _vm._v("Announcement")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "resource-center mt-3" }, [
+      _c("h5", [
+        _c("a", { staticClass: "text-white", attrs: { href: "#" } }, [
+          _vm._v("Resource Center")
+        ])
       ])
     ])
   }
@@ -42251,7 +42291,24 @@ var render = function() {
         },
         on: { click: _vm.test }
       },
-      [_c("span", { staticClass: "far fa-lg fa-bell" })]
+      [
+        _c("span", { staticClass: "far fa-lg fa-bell" }),
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.isLooked,
+                expression: "!isLooked"
+              }
+            ],
+            staticClass: "badge badge-light"
+          },
+          [_vm._v("4")]
+        )
+      ]
     ),
     _vm._v(" "),
     _c("div", { staticClass: "dropdown-menu dropdown-menu-right mt-3" }, [
@@ -54057,7 +54114,7 @@ var app = new Vue({
                 return u != user;
             });
         }).listen('MessagePosted', function (e) {
-            __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].messages[__WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].currentChannel].push(e.message);
+            __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].messages.push(e.message);
         });
     },
     mounted: function mounted() {
@@ -54072,17 +54129,9 @@ __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].$on('channel-cha
     */
     if (__WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].currentChannel != data.id) {
         __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].title = data.title;
-        console.log("before");
-        console.log(__WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].currentChannel);
-        console.log(__WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].messages);
         __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].currentChannel = data.data_id;
         axios.get('/getmessages/' + data.data_id).then(function (response) {
-            console.log("after");
-            console.log(__WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].messages);
-            console.log(response.data.messages);
             __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].messages = response.data.messages;
-            console.log(__WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].currentChannel);
-            console.log(__WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].messages);
         });
     }
 });

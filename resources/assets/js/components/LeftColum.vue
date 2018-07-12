@@ -29,6 +29,15 @@
             <h5><a href="#" class="text-white">Direct Messages</a></h5>
             <a v-for="user in users" v-if="user.id!=currentUser.id" href="#" class="text-white list-item" :id="user.id" :data-id="'user'+user.id" @click="linkClicked">{{ user.name }}</a>
         </div>
+
+        <div class="announcement mt-3">
+            <h5><a href="#" class="text-white">Announcement</a></h5>
+            
+        </div>
+
+        <div class="resource-center mt-3">
+            <h5><a href="#" class="text-white">Resource Center</a></h5>
+        </div>
     </div>	
 </template>
 

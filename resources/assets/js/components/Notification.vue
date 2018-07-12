@@ -1,7 +1,7 @@
 <template>
     <div class="dropdown">
     	<a class="text-info" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="test">
-            <span class="far fa-lg fa-bell"></span>
+            <span class="far fa-lg fa-bell"></span><span v-show="!isLooked" class="badge badge-light">4</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right mt-3">
             <span class="dropdown-item" href="#">{{ notification }}</span>
@@ -16,12 +16,13 @@
     export default {
         data(){
         	return {
-
+                isLooked: false
         	}
         },
         methods:{
         	test(){
         		EventBus.$emit('test')
+                this.isLooked = true
         	}
         },
         computed:{

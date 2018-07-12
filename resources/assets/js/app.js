@@ -56,7 +56,7 @@ const app = new Vue({
                 EventBus.activeUsers.filter(u => u != user)
             })
             .listen('MessagePosted', (e) => {
-                EventBus.messages[EventBus.currentChannel].push(e.message)
+                EventBus.messages.push(e.message)
         })
     },
     mounted(){
@@ -71,17 +71,9 @@ EventBus.$on('channel-change', function(data){
     */
     if(EventBus.currentChannel != data.id){
         EventBus.title = data.title
-        console.log("before")
-        console.log(EventBus.currentChannel)
-        console.log(EventBus.messages)
         EventBus.currentChannel = data.data_id
         axios.get('/getmessages/'+data.data_id).then(response => {
-            console.log("after")
-            console.log(EventBus.messages)
-            console.log(response.data.messages)
             EventBus.messages =response.data.messages
-            console.log(EventBus.currentChannel)
-            console.log(EventBus.messages)
         })
     }
 });
@@ -92,3 +84,4 @@ EventBus.$on('messagesent', function(message){
         EventBus.is_message_sending = false
     })
 });
+
