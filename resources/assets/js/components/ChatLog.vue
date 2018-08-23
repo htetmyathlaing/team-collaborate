@@ -3,7 +3,7 @@
         <transition-group name="list">
             <chat-message v-for="message in messages" :key="message.id" :message="message"  class="list-complete-item"></chat-message>
         </transition-group>
-        <div v-show="is_message_sending" class='container'>
+        <div v-show="isMessageSending" class='container'>
             <div class='loader'>
                 <div class='loader-text'></div>
             </div>
@@ -12,15 +12,13 @@
 </template>
 
 <script>
-    import { EventBus } from './../event-bus.js'
-
     export default {
         computed:{
             messages(){
-              return EventBus.messages
+              return this.$store.state.messages
             },
-            is_message_sending(){
-              return EventBus.is_message_sending
+            isMessageSending(){
+              return this.$store.state.isMessageSending
             }
         },
         updated(){
@@ -32,7 +30,7 @@
 <style scoped>
 	.scroll-view{
         overflow-y: scroll;
-        height: 85vh;
+        height: 78vh;
         font-family: 'Raleway';
     }
     .container {
@@ -70,13 +68,13 @@
     }
   }
   .list-complete-item {
-    transition: all 1s;
+    transition: all 0.5s;
   }
   .list-enter-active, .list-leave-active {
-    transition: all 1s;
+    transition: all 0.5s;
   }
   .list-enter, .list-leave-to{
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateX(5px);
   }
 </style>

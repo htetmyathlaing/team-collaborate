@@ -22,18 +22,25 @@
         },
         computed:{
             currentChannel(){
-                return EventBus.currentChannel
+                return this.$store.state.currentChannel
             }
         },
         methods: {
             sendMessage(){
                 if(this.message)
-                    EventBus.$emit('messagesent', {
+                    this.$store.commit('toggleIsMessageSending')
+                    axios.post('/messages', {
                         message: this.message,
-                        currentChannel: this.currentChannel
-                    })
-                else console.log(this.currentChannel)
-                this.message = ''
+                        currentChannel: this.$store.state.currentChannel,
+                        currentGroup: this.$store.state.currentGroup.id
+                    }).then(response => {
+                        console.log(response.data)
+                        console.log(this.$store.state.messages)
+                        this.$store.commit('updateMessages', response.data)
+                        console.log(this.$store.state.messages)
+                        this.$store.commit('toggleIsMessageSending')
+                    }) 
+                    this.message = ''
             }
         }
     }

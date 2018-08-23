@@ -17,13 +17,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
+
+Route::get('/group/{group_id}', 'GroupController@index')->name('home');
 
 Route::resource('/messages', 'MessageController');
 
-Route::get('/getmessages/{channel}', 'HomeController@getMessages');
+Route::get('/getmessages/{channel}', 'MessageController@getMessages');
 
-Route::get('/init', 'HomeController@init');
+Route::get('/init/{group_id}', 'GroupController@init');
 
 
 Route::get('/user', function(){

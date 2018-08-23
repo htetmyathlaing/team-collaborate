@@ -11,8 +11,9 @@ export const EventBus = new Vue({
                 currentUser: '',
                 users:[],
                 channels: [],
+                currentGroup: '',
                 currentChannel: '',
                 title: '#general',
-                is_message_sending: false
+                isMessageSending: false
         }
 });

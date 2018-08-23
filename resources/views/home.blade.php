@@ -10,10 +10,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-    <script src="{{ mix('/js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
@@ -24,25 +20,33 @@
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     
     <style type="text/css" media="screen">
-        hr {
-          margin-top: 0.5em;
-          margin-bottom: 0.5em;
-          border: 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
+        a:hover{
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+        <a class="navbar-brand mx-auto" href="#">Team Collaborate</a>
+    </nav>
+
+    <div id="home">
+        <div class="container mt-3">
             <div class="row">
-                <left-colum></left-colum>
-                <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                        @csrf
-                </form>
-                <hr>
-                <right-colum></right-colum>
-            </div>      
+                @foreach($groups as $group)
+                    <a href="/group/{!! $group->id !!}" class="col-4">
+                        <div class="card">
+                            <div class="body">
+                                {!! $group->description !!}
+                            </div>
+                            <div class="footer">
+                            <h6 class="ml-auto">{!! $group->name !!}</h6>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
         </div>
     </div>
 </body>

@@ -1,12 +1,26 @@
 <template>
+
     <div class="col-4 border-left">
-        <h3>Details</h3>
+        <div class="container">
+        	<div class="row">
+                <h3 class="mx-auto">Details</h3>
+                <content-placeholders :rounded="true" v-show="isDataStillFetching">
+                    <content-placeholders-text :lines="2" class="mt-3" />
+                    <content-placeholders-text :lines="2" class="mt-4" />
+                    <content-placeholders-text :lines="2" class="mt-4" />
+                </content-placeholders>   
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        
+        computed: {
+        	isDataStillFetching(){
+        		return this.$store.state.isDataStillFetching
+        	}
+        }
     }
 </script>
 <style scoped>

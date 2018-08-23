@@ -57,6 +57,7 @@ class MessageController extends Controller
         $message = new Message();
         $message->message = $request->input('message');
         $message->user_id = Auth::id();
+        $message->group_id = $request->input('currentGroup');
         if($request->input('currentChannel')[0]=='c'){
             $message->type = "channel";
             $message->channel_id = (int)filter_var($request->input('currentChannel'), FILTER_SANITIZE_NUMBER_INT);
@@ -67,8 +68,7 @@ class MessageController extends Controller
         }
         $message->save();
 
-        broadcast(new MessagePosted($message))->toOthers();
-        // event(new MessagePosted($message));
+        // broadcast(new MessagePosted($message))->toOthers();
 
         return Message::latest()->with('user')->first();
     }
@@ -116,5 +116,27 @@ class MessageController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Return messages in the current channel
+     *
+     * @param  int $channel
+     * @return \Illuminate\Http\Response
+     */
+    public function getMessages($channel='')
+    {
+        $channel_id = (int) filter_var($channel, FILTER_SANITIZE_NUMBER_INT);
+    
+        if($channel[0]=='c')
+            return ['messages' => Message::where([
+                        ['type', '=', 'channel'],
+                        ['channel_id', '=', $channel_id]
+                ])->with('user')->get()];
+        else
+            return ['messages' => Message::where([
+                        ['type', '=', 'direct-message'],
+                        ['to_user_id', '=', $channel_id]
+                ])->with('user')->get()];
     }
 }
