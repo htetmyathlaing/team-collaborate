@@ -127,7 +127,7 @@ class MessageController extends Controller
         if($channel[0]=='c')
             return ['messages' => Message::where([
                         ['type', '=', 'channel'],
-                        ['channel_id', '=', $id]
+                        ['channel_id', '=', $channel_id]
                 ])->with('user')->get()];
         else
             return ['messages' => Message::where('type','direct-message')
