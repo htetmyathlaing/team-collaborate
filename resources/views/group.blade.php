@@ -8,11 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'TeamCollaborate') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    {{-- <script src="{{ mix('/js/app.js') }}" defer></script> --}}
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script src="{{ mix('/js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -20,22 +20,35 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{ mix('/css/app.css') }}"> --}}
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     
     <style type="text/css" media="screen">
         hr {
-          margin-top: 0.5em;
-          margin-bottom: 0.5em;
+          margin-top: 1em;
+          margin-bottom: 1em;
           border: 0;
           border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
-        .fade-enter-active, .fade-leave-active {
-            transition: all 1s;
-          }
-        .fade-enter, .fade-leave-to{
-            opacity: 0;
-            transform: translateY(-5px);
+        .card{
+            /*height: 100px;*/
+            border-radius: 0;
+            border: 0;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+            /*box-shadow: 5px 5px 25px 0 rgba(46,61,73,.2);*/
+        }
+        .btn-circle{
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+            box-shadow: 5px 5px 25px 0 rgba(46,61,73,.2);
+        }
+        .btn-circle:hover{
+            box-shadow: 2px 4px 8px 0 rgba(46,61,73,.3);
+            transition: box-shadow .2s ease-in-out;
         }
     </style>
     <script>
@@ -59,7 +72,10 @@
         </div>
         <create-channel-modal></create-channel-modal>
         <create-group-modal></create-group-modal>
-        <add-member-modal></add-member-modal> 
+        <add-member-modal></add-member-modal>
+        <delete-channel-modal></delete-channel-modal>
+        <voice-call-modal></voice-call-modal>
+        <video-call-modal></video-call-modal>
     </div>
 </body>
 </html>

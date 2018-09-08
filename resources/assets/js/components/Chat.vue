@@ -1,23 +1,49 @@
  <template>
-    <div class="col-10 bg-white">
+    <div class="col-10">
         <div class="container">
             <div class="row right-top border-bottom">
-                <content-placeholders :rounded="true" class="col-6" v-show="isDataStillFetching">
-                        <content-placeholders-text :lines="2" />
+                <content-placeholders :rounded="true" class="col-10" v-show="isDataStillFetching">
+                        <content-placeholders-text :lines="2"></content-placeholders-text>
                 </content-placeholders>
 
-               <div class="col-6" v-show="!isDataStillFetching">
+               <div class="col-10" v-show="!isDataStillFetching">
                     <a href="#">{{ title }}</a>
                     <p>{{ channelDescription }}</p>
                </div>
-               <div class="col">
-                    <div class="d-flex align-items-center justify-content-end" style="height: 100%">
+               <div class="ml-auto py-2 mr-3">
+                    <div class="align-middle" style="height: 100%">
+                         <a class="text-muted" 
+                            data-toggle="modal" 
+                            data-target="#voiceCallModal"
+                            @click="voiceCall">
+                            <span class="fas fa-lg fa-phone m-2"></span>
+                        </a>
+                         <a class="text-muted" 
+                            data-toggle="modal" 
+                            data-target="#videoCallModal">
+                            <span class="fas fa-lg fa-video m-2"></span>
+                        </a>
                         <a class="text-info" @click="toggleDetails">
-                            <span class="fas fa-info-circle m-2"></span>
+                            <span class="fas fa-lg fa-info-circle m-2"></span>
+                        </a>
+                        
+                        <a class="dropdown ml-3">
+                            <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-xs fa-ellipsis-v"></span>
+                            </a>
+                                <div class="dropdown-menu dropdown-menu-right mt-3">
+                                <h6 class="dropdown-header">ချန်နယ်ကိုဖျက်မည်</h6>
+                                <div class="dropdown-item border-top text-danger"
+                                    data-toggle="modal" 
+                                    data-target="#deleteChannelModal">
+                                    <p>ဖျက်မည် </p>
+                                </div>
+                            </div>
                         </a>
                     </div>
                </div>
             </div>
+               
             <div class="row">
                 <div class="col">
                     <content-placeholders 
@@ -54,6 +80,9 @@
             toggleDetails(){
                 this.isAnnouncementShowed = false
                 this.isChatroomDetailsShowed = !this.isChatroomDetailsShowed
+            },
+            voiceCall(){
+                console.log('calling')
             }
 	    },
         computed:{
@@ -78,5 +107,8 @@
     }
     .right-top  a{
         font-size: 1.2em;
+    }
+    .fas:hover{
+        cursor: pointer;
     }
 </style>

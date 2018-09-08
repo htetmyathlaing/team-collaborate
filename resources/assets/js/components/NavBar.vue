@@ -1,30 +1,55 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-        <a class="dropdown  nav-item mr-auto" v-show="!isDataStillFetching">
-            <a class="text-white" role="button" data-toggle="dropdown">
-                <span class="dropdown-toggle group-name">{{ currentGroup.name }}</span>
-            </a>
-            <div class="dropdown-menu justify-content-center">
-                <a class="dropdown-item">{{ currentUser.email }}</a>
-                <h6 class="dropdown-header">Groups</h6>
-                <a href="#" class="dropdown-item" v-for="group in currentUser.involved_groups" :id="group.id" @click="changeGroup">{{ group.name }}</a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item"
-                            data-toggle="modal" 
-                            data-target="#createGroupModal">Create Group</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/logout"
-                                                     onclick="event.preventDefault();
-                                                                   document.getElementById('logout-form').submit();">
-                          Logout
-                </a>
-            </div>
-        </a>
-        <a class="navbar-brand mx-auto" href="/home">Team Collaborate</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Team Collaborate</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="ml-auto mr-5 notification-corner">
-            <announcement></announcement>
-            <notifications></notifications>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">
+                            <span class="fas fa-lg fa-home"></span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="ml-auto notification-corner">
+                    <ul class="navbar-nav">
+                        <announcement></announcement>
+                        <notifications></notifications>
+                        
+                        <li class="nav-item dropdown" v-show="!isDataStillFetching"> 
+                            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+                                {{ currentGroup.name }}                                
+                                <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu justify-content-center">
+                                <a class="dropdown-item">{{ currentUser.email }}</a>
+                                <div class="dropdown-divider"></div>
+                                <h6 class="dropdown-header">အဖွဲ့များ</h6>
+                                <a v-for="group in currentUser.involved_groups" 
+                                    :id="group.id"
+                                    class="dropdown-item"
+                                    href="#"  
+                                    @click="changeGroup">{{ group.name }}</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item"
+                                            data-toggle="modal" 
+                                            data-target="#createGroupModal">အဖွဲ့သစ် ဖန်တီးမည်</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout"
+                                                                     onclick="event.preventDefault();
+                                                                                   document.getElementById('logout-form').submit();">
+                                          ထွက်ရန်
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </nav>
 </template>
@@ -49,7 +74,7 @@
                 console.log(this.$store.state.messages)
                 axios.get('/init/'+ event.target.id).then(response => {
                     this.$store.commit('assignMessages', response.data.messages)
-                    this.$store.commit('updateCurrentUser', response.data.user[0])
+                    this.$store.commit('updateCurrentUser', response.data.user)
                     // this.$store.commit('updateUsers', response.data.group.users)
                     // this.$store.commit('updateChannels', response.data.group.channels)
                     this.$store.commit('updateCurrentGroup', response.data.group)

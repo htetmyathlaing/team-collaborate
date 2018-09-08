@@ -5,7 +5,7 @@
             class="btn btn-success btn-circle m-3"
             data-toggle="modal"
             data-placement="right" 
-            title="Videoဖိုင်အသစ်တင်ရန်"
+            title="ဓာတ်ပုံအသစ်တင်ရန်"
             @click="choosing=true">
             <span class="fas fa-plus"></span>
         </button>
@@ -17,7 +17,7 @@
 				<input type="file" 
 					class="form-control-file" 
 					id="inputFile"
-					accept="video/*"
+					accept="image/*"
 					ref="file"
 					@change="processFile">
 				<span class="invalid-feedback" role="alert">
@@ -67,10 +67,10 @@
 		<!-- View Files -->
 		<div v-show="viewing" class="card mt-3">
 			<span class="far fa-2x fa-arrow-alt-circle-left m-3 back-arrow" 
-				@click="back">
+				@click="viewing=false">
 			</span>
-  			<div class="card-body">
-  				<video controls ref="video" src="" height="100%" width="100%" />
+  			<div class="card-body scroll-view">
+  				<img ref="img" src="" width="100%" />
   			</div>
 		</div>
 
@@ -110,7 +110,7 @@
         	}
         },
         mounted(){
-    		axios.get('/getfiles/'+ this.$store.state.currentGroup.id+'/video').then(response => {
+    		axios.get('/getfiles/'+ this.$store.state.currentGroup.id+'/image').then(response => {
         		this.files = response.data
         	})
         },
@@ -151,11 +151,11 @@
         				this.choosing = false
         				this.file = ''
 	            }) 
-        	},	
+        	},
         	cancle(){
         		this.choosing = false
         		$('#inputFile').removeClass('is-invalid')
-        	},
+        	},	
         	select(event){
         		this.selectedId = event.target.dataset['id']
         	},
@@ -163,12 +163,9 @@
         		this.viewing = true
         		this.selectedId = event.target.dataset['id']
         		axios.get('/files/'+ this.selectedId).then(response => {
-	        		this.$refs.video.src = response.data
+        			//  this.$refs.title.innerHTML = this.selectedId
+	        		this.$refs.img.src = response.data
 	        	})
-        	},
-        	back(){
-        		this.viewing = false
-        		this.$refs.video.pause()
         	},
         	deleteFile(){
         		this.deleting = true

@@ -1,30 +1,26 @@
 <template>
     <div class="col">
-    	<div class="m-3">
-    		<h4>Resource Center</h4>
-    	</div>
-        <div class="container">
-            <ul class="nav nav-pills nav-fill">
-                <li class="nav-item" @click="toggleActive">
-                    <router-link to="/resource-center/notes" class="nav-link active">Notes</router-link>
-                </li>
-                <li class="nav-item"  @click="toggleActive">
-                    <router-link to="/resource-center/files" class="nav-link">Files</router-link>
-                </li>
-                <li class="nav-item"  @click="toggleActive">
-                    <router-link to="/resource-center/videos" class="nav-link">Videos</router-link>
-                </li>
-                <li class="nav-item"  @click="toggleActive">
-                    <router-link to="/resource-center/extras" class="nav-link">Extras</router-link>
-                </li>
-            </ul>
-            <!-- <keep-alive>
-                <component v-bind:is="currentTabComponent"  class="mt-3"></component>
-            </keep-alive> -->
-            <keep-alive>
-                <router-view></router-view>
-            </keep-alive>
-        </div>      
+    	<div class="container">
+            <div class="row">
+                <h4 class="mx-auto m-3">Resource Center</h4>
+                <div class="col-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item" @click="toggleActive">
+                            <router-link to="/resource-center/notes" class="nav-link active">Notes</router-link>
+                        </li>
+                        <li class="nav-item"  @click="toggleActive">
+                            <router-link to="/resource-center/photos" class="nav-link">Photos</router-link>
+                        </li>
+                        <li class="nav-item"  @click="toggleActive">
+                            <router-link to="/resource-center/videos" class="nav-link">Videos</router-link>
+                        </li>
+                    </ul>
+                    <keep-alive>
+                        <router-view></router-view>
+                    </keep-alive>
+                </div>      
+            </div>
+        </div>
     </div>
 </template>
 
@@ -32,7 +28,7 @@
     export default {
         data(){
             return {
-
+             
             }
         },
         methods:{

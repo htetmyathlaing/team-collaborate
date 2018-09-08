@@ -12,12 +12,25 @@ use App\Channel;
 class GroupController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($group_id)
+    public function index($group_id=null)
     {
+        if(is_null($group_id))
+            return view('welcome');
+
         if(Group::find($group_id))
             return view('group')->with('group_id', $group_id);
         else
@@ -32,7 +45,7 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
 
@@ -78,10 +91,10 @@ class GroupController extends Controller
      */
     public function init($group_id)
     {
-        return ['user' => User::find(Auth::id())->with('involvedGroups')->get(), 
+        return ['user' => User::with('involvedGroups')->find(Auth::id()), 
                 'group' => Group::with('channels')->with('users')->find($group_id),
                 'messages' => Message::where('group_id', $group_id)
-                                     ->where('channel_id', Group::with('channels')->find(1)->channels[0]->id)
+                                     ->where('channel_id', Group::with('channels')->find($group_id)->channels[0]->id)
                                      ->with('user')
                                      ->get()];
     }

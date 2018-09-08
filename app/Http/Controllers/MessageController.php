@@ -6,12 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Message;
-use App\Group;
-use App\Channel;
 use App\Events\MessagePosted;
 
 class MessageController extends Controller
 {
+
     /**
      * Create a new controller instance.
      *
@@ -67,10 +66,7 @@ class MessageController extends Controller
             $message->to_user_id = (int)filter_var($request->input('currentChannel'), FILTER_SANITIZE_NUMBER_INT);
         }
         $message->save();
-
-        // broadcast(new MessagePosted($message))->toOthers();
-
-        return Message::latest()->with('user')->first();
+        broadcast(new MessagePosted($message->id));
     }
 
     /**
@@ -131,12 +127,13 @@ class MessageController extends Controller
         if($channel[0]=='c')
             return ['messages' => Message::where([
                         ['type', '=', 'channel'],
-                        ['channel_id', '=', $channel_id]
+                        ['channel_id', '=', $id]
                 ])->with('user')->get()];
         else
-            return ['messages' => Message::where([
-                        ['type', '=', 'direct-message'],
-                        ['to_user_id', '=', $channel_id]
-                ])->with('user')->get()];
+            return ['messages' => Message::where('type','direct-message')
+                                    ->whereIn('user_id', [Auth::id(), $channel_id])
+                                    ->whereIn('to_user_id', [Auth::id(), $channel_id])
+                                    ->with('user')->get()];
+
     }
 }

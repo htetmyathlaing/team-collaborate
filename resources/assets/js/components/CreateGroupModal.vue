@@ -3,39 +3,39 @@
 	  	<div class="modal-dialog" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
-	        		<h5 class="modal-title mx-auto">Create a new Group</h5>
+	        		<h5 class="modal-title mx-auto">အဖွဲ့အသစ်တစ်ခု ဖန်တီးမည်</h5>
 	        	<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          		<span aria-hidden="true">&times;</span>
 	        	</button> -->
 	      		</div>
 	      		<div class="modal-body">
         			<div class="form-group row">
-						<label for="inputName" class="col-sm-2 col-form-label">Name</label>
-					    <div class="col-sm-10">
-					      	<input type="text" class="form-control" id="inputName" placeholder="Name" v-model="name" required autofocus>
-					      	<span v-show="isNameValid" class="invalid-feedback" role="alert">
-                                <strong>Name must be enter.</strong>
+						<label for="inputName" class="col-sm-3 col-form-label">အမည်</label>
+					    <div class="col-sm-9">
+					      	<input type="text" class="form-control" id="inputName" placeholder="အဖွဲ့အမည် ထည့်သွင်းပါ။" v-model="name"  @keydown.enter="create" required autofocus>
+					      	<span class="invalid-feedback" role="alert">
+                                <strong>အမည်ကို ရိုက်ထည့်ပေးရမည်။</strong>
                             </span>
 					    </div>
 					</div>
 					<div class="form-group row">
-					    <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
-					    <div class="col-sm-10">
-					      	<input type="text" class="form-control" id="inputDescription" placeholder="Description in short"v-model="description" >
-					      	<span v-show="isDescriptionValid" class="invalid-feedback" role="alert">
-                                <strong>Description must be subscribe.</strong>
+					    <label for="inputDescription" class="col-sm-3 col-form-label">ဖော်ပြချက်</label>
+					    <div class="col-sm-9">
+					      	<input type="text" class="form-control" id="inputDescription" placeholder="ဤအဖွဲ့နှင့် ပတ်သက်သော အကြောင်းအရာဖော်ပြချက်ထည့်ပါ။"v-model="description"  @keydown.enter="create">
+					      	<span class="invalid-feedback" role="alert">
+                                <strong>အဖွဲ့နှင့်ပတ်သက်သော​ဖော်ပြချက် ထည့်ပေးရမည်။</strong>
                             </span>
 					    </div>
 					</div>
-					<div v-show="isChannelCreating" class='container'>
+					<div v-show="isGroupCreating" class='container'>
 			            <div class='loader'>
 			                <div class='loader-text'></div>
 			            </div>
 			        </div>
 	      		</div>
 	      		<div class="modal-footer">
-	        		<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="cancel" :disabled="isDisable">Cancel</button>
-	        		<button type="button" class="btn btn-primary" @click="create">Create</button>
+	        		<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="cancel" :disabled="isGroupCreating">မလုပ်တော့ပါ</button>
+	        		<button type="button" class="btn btn-primary" @click="create" :disabled="isGroupCreating">ဖန်တီးမည်</button>
 	      		</div>
 	    	</div>
 	  	</div>
@@ -48,10 +48,7 @@
         	return {
         		name: '',
         		description: '',
-        		isChannelCreating: false,
-        		isNameValid: true,
-        		isDescriptionValid: true,
-        		isDisable: false
+        		isGroupCreating: false
         	}
         },
         methods:{
@@ -61,10 +58,17 @@
         		if(this.description == '')
         			$('#inputDescription').toggleClass('is-invalid');
         		if(this.name  && this.description){
-        			$('input').removeClass('is-invalid')
-        			$('input').addClass('is-valid')
-        			this.isDisable = true
-        			this.isChannelCreating = true
+        			$('#inputName #inputDescription').removeClass('is-invalid')
+        			$('#inputName #inputDescription').addClass('is-valid')
+        			this.isGroupCreating = true
+
+        			axios.post('/groups', {
+                        name: this.name,
+                        description: this.description
+                    }).then(response => {
+                        console.log(response.data)
+                        $('#inputName #inputDescription').removeClass('is-valid')
+                    }) 
         		}
         	},
         	cancel(){
@@ -82,9 +86,10 @@
     }
 
   	.loader-text:after {
-	    content: "Creating Channel";
+	    content: "အဖွဲ့ကို ဖန်တီးနေသည်";
 	    font-weight: bold;
 	    font-style: italic;
+	    color: #28a745;
 	    animation-name: loading-text;
 	    animation-duration: 1s;
 	    animation-iteration-count: infinite;
@@ -92,37 +97,37 @@
 
 	 @keyframes loading-text {
 	    0% {
-	      content: "Creating Channel";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည်";
 	    }
 	    10% {
-	      content: "Creating Channel .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် .";
 	    }
 	    20% {
-	      content: "Creating Channel . .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . .";
 	    }
 	    30% {
-	      content: "Creating Channel . . . ";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . . . ";
 	    }
 	    40% {
-	      content: "Creating Channel . . . .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . . . .";
 	    }
 	    50% {
-	      content: "Creating Channel . . . . .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . . . . .";
 	    }
 	    60% {
-	      content: "Creating Channel . . . . . .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . . . . . .";
 	    }
 	    70% {
-	      content: "Creating Channel . . . . . . .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . . . . . . .";
 	    }
 	    80% {
-	      content: "Creating Channel . . . . . . . .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . . . . . . . .";
 	    }
 	    90% {
-	      content: "Creating Channel . . . . . . . . .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . . . . . . . . .";
 	    }
 	    100% {
-	      content: "Creating Channel . . . . . . . . . .";
+	      content: "အဖွဲ့ကို ဖန်တီးနေသည် . . . . . . . . . .";
 	    }
 	}
 </style>

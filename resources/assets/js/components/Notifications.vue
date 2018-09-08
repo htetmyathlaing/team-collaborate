@@ -1,18 +1,18 @@
 <template>
-	<a class="dropdown mr-5">
-        <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="far fa-lg fa-bell" @click="isShowed = !isShowed"></span>
+    <li class="nav-item dropdown  mr-3">
+        <a class="nav-link" role="button" data-toggle="dropdown">
+            <span class="far fa-lg fa-bell" @click="isShowed = false"></span>
             <span v-show="isShowed" class="badge badge-danger">9</span>
         </a>
-            <div class="dropdown-menu dropdown-menu-right mt-3">
-	        <h6 class="dropdown-header">Notifications</h6>
-	        <div v-for="(notification,index) in notifications">
-	        	<div class="dropdown-item border-top">
-	        		<p>Mg Mg posted new vide file in Resource Center</p>
-	        	</div>
-	        </div>
-    	</div>
-    </a>
+        <div class="dropdown-menu dropdown-menu-right">
+    	   <h6 class="dropdown-header">Notifications</h6>
+    	   <div v-for="(notification,index) in notifications">
+    	        <div class="dropdown-item border-top">
+    	        	<p>Mg Mg posted new vide file in Resource Center</p>
+    	        </div>
+    	   </div>
+        </div>
+    </li>
 </template>
 
 <script>
@@ -39,7 +39,7 @@
 		white-space: normal !important;
 	}
 	.badge{
-		transform: translate(-10px, -10px);
+		transform: translate(10px, -30px);
         position: absolute;
 	}
 </style>

@@ -9,65 +9,57 @@
         <div v-show="!isDataStillFetching">
             <div class="channels mt-3">
                 <div class="channel-header">
-                    <a href="#">Channels</a>
+                    <a href="#">ချန်နယ်များ</a>
                     <span class="fas fa-plus-circle float-right m-1"  
                             data-toggle="modal" 
                             data-target="#createChannelModal"
                             data-placement="top" 
-                            title="Create Group"></span>
+                            title="ချန်နယ်အသစ်တစ်ခု ဖန်တီးမည်"></span>
                 </div>
-                <div v-for="(channel,index) in channels" 
+                <hr>
+                <div class="scroll-view">
+                    <div v-for="(channel,index) in channels" 
                         :key="channel.id" 
                         class="channel-list">
 
-                    <router-link to="/" v-if="index==0">
-                        <a class="list-item active" 
-                            :id="channel.id" 
-                            :data-id="'channel'+channel.id" 
-                            :data-index="index"
-                            @click="changeChannel">{{ channel.name }}</a>
-                    </router-link>
-
-                    <router-link to="/" v-else>
-                        <a class="list-item"
-                            :id="channel.id" 
-                            :data-id="'channel'+channel.id" 
-                            :data-index="index"
-                            @click="changeChannel">{{ channel.name }}</a>
-                    </router-link>
+                        <router-link to="/">
+                            <a class="list-item"
+                                :id="'channel'+channel.id" 
+                                :data-index="index"
+                                @click="changeChannel">{{ channel.name }}</a>
+                        </router-link>
+                    </div>
                 </div>
             </div>
             <hr>
             <div class="direct-message mt-3">
-
                 <div class="channel-header">
-                    <a href="#" class="">Direct Messages</a>
-                </div>
-
-                <router-link to="/" v-for="user in users"
-                    :key="user.id">
-                    <a class="list-item" 
-                        v-if="user.id!=currentUser.id"
-                        :id="user.id" 
-                        :data-id="'user'+user.id" 
-                        @click="changeChannel">{{ user.name }}</a>
-                </router-link>
-            </div>
-
-            <hr>
-            <div class="add-member mt-3">
-                <a class="list-item">Add Member
-                    <span class="fas fa-plus-circle ml-3 mt-2"
+                    <a href="#" class="">တိုက်ရိုက်စာတိုများ</a>
+                    <span class="fas fa-plus-circle float-right m-1"
                             data-toggle="modal" 
                             data-target="#addMemberModal"
                             data-placement="top" 
-                            title="Add Member"></span>
-                </a>
+                            title="အဖွဲ့ဝင်အသစ် ပေါင်းထည့်ရန်"></span>
+                </div>
+                <hr>
+                
+                <div class="scroll-view">
+                    <router-link to="/" v-for="user in users"
+                        :key="user.id"
+                        class="channel-list">
+                        <a class="list-item" 
+                            v-if="user.id!=currentUser.id"
+                            :id="'user'+user.id"
+                            @click="changeChannel">{{ user.name }}</a>
+                    </router-link>
+                </div>
             </div>
+
             <hr>
-            <div class="announcement mt-3">
-                <router-link to="/resource-center">
+            <div class="resource-center mt-3">
+                <router-link to="/resource-center/notes">
                     <a class="list-item"
+                        id="resource-center"
                         @click="changeChannel">Resource Center</a>
                 </router-link>
             </div>
@@ -97,6 +89,9 @@
                 return this.$store.state.isDataStillFetching
             }
         },
+        updated(){
+            $('#'+this.$store.state.currentChannel).addClass("active")
+        },
         methods:{
             changeChannel: function(event){
                 /**
@@ -106,22 +101,20 @@
                 // if(this.$store.state.currentChannel != event.target.id){
                     this.$store.commit('updateTitle', event.target.innerText)
                     this.$store.commit('updateCurrentChannel', event.target.id)
-                    if($(event.target).data('id')){
-                        if($(event.target).data('id')[0] === 'c')
+                    if(event.target.id){
+                        if(event.target.id[0] === 'c')
                             this.$store.commit('updateChannelDescription', 
                                 this.$store.state.currentGroup.channels[$(event.target).data('index')].description)
-                        else if($(event.target).data('id')[0] === 'u')
+                        else
                             this.$store.commit('updateChannelDescription', "This is private chat.")
 
-                        axios.get('/getmessages/'+$(event.target).data('id')).then(response => {
+                        axios.get('/getmessages/'+event.target.id).then(response => {
                             this.$store.commit('assignMessages', response.data.messages)
                         })
                     }
                 // }
 
-                for(let channel of this.channels){
-                    $('.list-item').attr("class","list-item")
-                }
+                $('.list-item').attr("class","list-item")
                 $(event.target).toggleClass("active")
             }
         }
@@ -132,9 +125,20 @@
     })
 </script>
 <style scoped>
+    hr {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        border: 0;
+        border-top: 1px solid #C8BEDF;
+    }
+    .scroll-view{
+        overflow-y: scroll;
+        height: 30vh;
+    }
     .left-col{
-        height: 100vh;
+        height: 94vh;
         /*background: #4A3A4A;*/
+        background: #514078;
     }
 	.group-name{
         font-size: 1.5em;
@@ -145,27 +149,34 @@
         color: white !important;
     }
     .list-item{
-        width: 115%;
+        width: 114.5%;
         display: flex;
         line-height: 2em;
         padding: 0px 0px 0px 30px;
-        transform: translate(-15px, 0px);
+        transform: translateX(-15px);
+    }
+    .channel-list .list-item:hover{
+        transform: scale(1.05, 1.05);
+        transition: transform .1s;
+        transform: translateX(-10px);
     }
     a{
         text-decoration: none;
-        color: #4A3A4A !important;
+        /*color: #4A3A4A !important;*/
+        color: #C8BEDF !important;
     }
     a:hover{
-        color: #000 !important;
+        color: #fff !important;
     }
     .channel-header a{
         font-size: 1.2em;
     }
-    .fa-plus-circle, .add-member > a{
-        color: #4A3A4A;
+    .fa-plus-circle{
+        color: #C8BEDF;
     }
     .fa-plus-circle:hover{
-        color: #28a745;
+        /*color: #28a745;*/
+        color: #fff !important;
         cursor: pointer;
     }
 </style>

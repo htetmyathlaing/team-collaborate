@@ -22,9 +22,9 @@ class MessagePosted implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct($id)
     {
-       $this->message = Message::latest()->with('user')->first();
+       $this->message = Message::with('user')->find($id);
     }
 
     /**
@@ -35,6 +35,6 @@ class MessagePosted implements ShouldBroadcast
     public function broadcastOn()
     {
         //return new Channel('chatroom');
-        return new PresenceChannel('chatroom');
+        return new PresenceChannel('chatroom.'.$this->message->group_id);
     }
 }

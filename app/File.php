@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class File extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,9 +12,8 @@ class Message extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'message',
+        'file_title','file_name','file_type','user_id', 'group_id',
     ];
-
 
     public function user()
     {

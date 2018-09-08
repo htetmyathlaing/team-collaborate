@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Channel;
+use App\User;
 use App\Group;
-use App\Message;
 
-
-class ChannelController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -49,19 +47,22 @@ class ChannelController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name'=>'required',
-            'description'=>'required',
-            'group_id'=>'required'
-        ]);
-        
-        $channel = new Channel();
-        $channel->name = '#'.strtolower($request->input('name'));
-        $channel->description = $request->input('description');
-        $channel->group_id = $request->input('group_id');
-        $channel->save();
-
-        return Group::with('channels')->with('users')->find($channel->group_id);
+        $user = User::where('email', $request->input('email'))->first();
+        if($user){
+            $role = DB::table('group_user')
+                    ->select('id')
+                    ->where('user_id', $user->id)
+                    ->where('group_id', $request->input('group_id'))
+                    ->get();
+            if(!sizeof($role)){
+                DB::insert('insert into group_user (user_id, group_id) values (?, ?)', [$user->id, $request->input('group_id')]);
+                return $user;
+            }
+            else
+                return "exit";
+        }
+        else
+            return "not found";
     }
 
     /**
@@ -104,20 +105,8 @@ class ChannelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($group_id, $id)
+    public function destroy($id)
     {
-        if($id[0]=='c'){
-            $id = (int)filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-            $type = 'channel';
-            Channel::destroy($id);
-            Message::where('channel_id', $id)->delete();
-        }
-        else{
-            $id = (int)filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-            $type= 'user';
-            DB::delete('delete from group_user where group_id = ? and user_id  = ?', [$group_id, $id]);
-            Message::where('to_user_id', $id)->delete();
-        }
-        return json_encode(['type' => $type, 'id' => $id]);
+        //
     }
 }

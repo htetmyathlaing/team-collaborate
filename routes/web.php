@@ -23,33 +23,50 @@ Route::get('/group/{group_id}', 'GroupController@index')->name('home');
 
 Route::resource('/messages', 'MessageController');
 
+Route::resource('/channels', 'ChannelController');
+
+Route::delete('/channel/{group_id}/{id}', 'ChannelController@destroy');
+
 Route::get('/getmessages/{channel}', 'MessageController@getMessages');
 
 Route::get('/init/{group_id}', 'GroupController@init');
 
+Route::resource('/groups', 'GroupController');
 
-Route::get('/user', function(){
-	return App\User::with('messages')->get();
-});
+Route::resource('/users', 'UserController');
 
-Route::get('/mail', function(){
-	$data = array('name'=>"Htet Myat", "body" => "Testing Email");
+Route::resource('/notes', 'NoteController');
 
-	Mail::send('testmail', $data, function($message) {
-    	$message->to('htetmyathlaing.htd@gmail.com', 'Htet Myat')
-                ->subject('Web Testing Mail with app pw')
-    	        ->from('htetmyathlaing.htd@gmail.com','Htet Myat Hlaing');
-	});
+Route::get('/getnotes/{group_id}', 'NoteController@getNotes');
 
-});
+Route::resource('/files', 'FileController');
 
-Route::get('/test', function(){
-	$message = new App\Message();
-    $message->message = 'message';
-    $message->user_id = Auth::id();
-	broadcast(new App\Events\MessagePosted($message));
-	// broadcast(new App\Events\TestEvent());
-});
+Route::get('/getfiles/{group_id}/{type}', 'FileController@getFiles');
+
+
+
+// Route::get('/test', function(){
+// 	return asset('/css/app.css');
+// });
+
+// Route::get('/mail', function(){
+// 	$data = array('name'=>"Htet Myat", "body" => "Testing Email");
+
+// 	Mail::send('testmail', $data, function($message) {
+//     	$message->to('htetmyathlaing.htd@gmail.com', 'Htet Myat')
+//                 ->subject('Web Testing Mail with app pw')
+//     	        ->from('htetmyathlaing.htd@gmail.com','Htet Myat Hlaing');
+// 	});
+
+// });
+
+// Route::get('/test', function(){
+// 	$message = new App\Message();
+//     $message->message = 'message';
+//     $message->user_id = Auth::id();
+// 	broadcast(new App\Events\MessagePosted($message));
+// 	broadcast(new App\Events\TestEvent());
+// });
 
 
 

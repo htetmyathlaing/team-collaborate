@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Group;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -24,7 +24,7 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $groups = Group::all();
+        $groups =  User::with('involvedGroups')->find(Auth::id())->involvedGroups;
         return view('home', compact('groups'));
     }
     

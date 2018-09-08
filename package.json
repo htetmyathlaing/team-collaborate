@@ -20,6 +20,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "@tinymce/tinymce-vue": "^1.0.9",
         "laravel-echo": "^1.4.0",
         "pusher-js": "^4.2.2",
         "vue-content-placeholders": "^0.2.1",

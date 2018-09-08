@@ -4,17 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class Note extends Model
 {
-    /**
+	/**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id', 'message',
+        'title','content','user_id', 'group_id',
     ];
-
 
     public function user()
     {
