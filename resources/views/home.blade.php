@@ -102,9 +102,9 @@
 
             <div class="row" id="groups">
                 @foreach($groups as $group)
-                    <a href="/group/{!! $group->id !!}" class="col-4 nav-link">
+                    <a href="/group/{!! $group->id !!}" class="col-md-4 col-sm-6 nav-link">
                         <div class="card">
-                            <div class="body mt-3">
+                            <div class="card-body mt-3">
                                 <div class="text-center">{!! $group->name !!}</div>
                                 <hr>
                                 <div class="text-muted ml-3 py-3">
@@ -215,9 +215,9 @@
                         $('#btn-create, #btn-cancel').prop('disabled', true);
                         $('#creating').css('display', 'block');
                         $("#groups").append(`
-                            <a href="/group/${result.id}" class="col-4 nav-link">
+                            <a href="/group/${result.id}" class="col-md-4 col-sm-6 nav-link">
                                 <div class="card">
-                                    <div class="body mt-3">
+                                    <div class="card-body mt-3">
                                         <div class="text-center">${result.name}</div>
                                         <hr>
                                         <div class="text-muted ml-3 py-3">

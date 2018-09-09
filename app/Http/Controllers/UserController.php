@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AppNotification;
 use App\User;
 use App\Group;
 
@@ -56,6 +59,15 @@ class UserController extends Controller
                     ->get();
             if(!sizeof($role)){
                 DB::insert('insert into group_user (user_id, group_id) values (?, ?)', [$user->id, $request->input('group_id')]);
+
+                $users = Group::with('users')->find($request->input('group_id'))->users;
+                $notification = [
+                    'user' => Auth::user()->name,
+                    'group'  => $request->input('group_id'),
+                    'action' => "added $user->name to ".Group::find($request->input('group_id'))->name,
+                ];
+
+                Notification::send($users, new AppNotification($notification));
                 return $user;
             }
             else

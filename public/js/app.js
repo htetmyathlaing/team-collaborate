@@ -2086,6 +2086,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -2723,6 +2728,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: [],
@@ -3167,6 +3176,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                    return n.id != _this5.selectedId;
                             });
                             _this5.selectedId = '';
+                            _this5.title = '';
+                            _this5.content = '';
                             _this5.writing = false;
                             _this5.viewing = false;
                             _this5.editing = false;
@@ -3209,19 +3220,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      isShowed: true
-    };
-  },
+    data: function data() {
+        return {
+            isNotified: true
+        };
+    },
 
-  computed: {
-    notifications: function notifications() {
-      return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    computed: {
+        notifications: function notifications() {
+            return this.$store.state.notifications;
+        },
+        unreadNotifications: function unreadNotifications() {
+            this.isNotified = true;
+            var n = this.$store.state.notifications.filter(function (n) {
+                return n.read_at == null;
+            }).length;
+            if (!n) this.isNotified = false;
+            return n;
+        }
+    },
+    methods: {
+        seenNotification: function seenNotification() {
+            var _this = this;
+
+            this.isNotified = false;
+            axios.put('/notifications', {}).then(function (response) {
+                _this.$store.commit('assignNotifications', response.data);
+            });
+        }
     }
-  }
+
 });
 
 /***/ }),
@@ -3415,6 +3451,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
                 _this4.selectedId = '';
                 _this4.deleting = false;
+                _this4.viewing = false;
                 $('#deleteFileModal').modal("hide");
             });
         },
@@ -7757,7 +7794,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.calling-text[data-v-1be0e6aa]:after {\n    content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A\";\n    font-weight: bold;\n    font-style: italic;\n    color: #28a745;\n    -webkit-animation-name: saving-text-data-v-1be0e6aa;\n            animation-name: saving-text-data-v-1be0e6aa;\n    -webkit-animation-duration: 1s;\n            animation-duration: 1s;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n}\n@-webkit-keyframes saving-text-data-v-1be0e6aa {\n0% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes saving-text-data-v-1be0e6aa {\n0% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n", ""]);
 
 // exports
 
@@ -7787,7 +7824,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\nhr[data-v-255e88ac] {\n        margin-top: 0.5em;\n        margin-bottom: 0.5em;\n        border: 0;\n        border-top: 1px solid #C8BEDF;\n}\n.scroll-view[data-v-255e88ac]{\n        overflow-y: scroll;\n        height: 30vh;\n}\n.left-col[data-v-255e88ac]{\n        height: 94vh;\n        /*background: #4A3A4A;*/\n        background: #514078;\n}\n.group-name[data-v-255e88ac]{\n        font-size: 1.5em;\n        font-family: sans-serif;\n}\n.active[data-v-255e88ac]{\n        background: #28a745;\n        color: white !important;\n}\n.list-item[data-v-255e88ac]{\n        width: 114.5%;\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        line-height: 2em;\n        padding: 0px 0px 0px 30px;\n        -webkit-transform: translateX(-15px);\n                transform: translateX(-15px);\n}\n.channel-list .list-item[data-v-255e88ac]:hover{\n        -webkit-transform: scale(1.05, 1.05);\n                transform: scale(1.05, 1.05);\n        -webkit-transition: -webkit-transform .1s;\n        transition: -webkit-transform .1s;\n        transition: transform .1s;\n        transition: transform .1s, -webkit-transform .1s;\n        -webkit-transform: translateX(-10px);\n                transform: translateX(-10px);\n}\na[data-v-255e88ac]{\n        text-decoration: none;\n        /*color: #4A3A4A !important;*/\n        color: #C8BEDF !important;\n}\na[data-v-255e88ac]:hover{\n        color: #fff !important;\n}\n.channel-header a[data-v-255e88ac]{\n        font-size: 1.2em;\n}\n.fa-plus-circle[data-v-255e88ac]{\n        color: #C8BEDF;\n}\n.fa-plus-circle[data-v-255e88ac]:hover{\n        /*color: #28a745;*/\n        color: #fff !important;\n        cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\nhr[data-v-255e88ac] {\n        margin-top: 0.5em;\n        margin-bottom: 0.5em;\n        border: 0;\n        border-top: 1px solid #C8BEDF;\n}\n.scroll-view[data-v-255e88ac]{\n        overflow-y: scroll;\n        height: 30vh;\n}\n.left-col[data-v-255e88ac]{\n        height: 94vh;\n        /*background: #4A3A4A;*/\n        background: #514078;\n}\n.group-name[data-v-255e88ac]{\n        font-size: 1.5em;\n        font-family: sans-serif;\n}\n.active[data-v-255e88ac]{\n        background: #28a745;\n        color: white !important;\n}\n.list-item[data-v-255e88ac]{\n        width: 114.5%;\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        line-height: 2em;\n        padding: 0px 0px 0px 30px;\n        -webkit-transform: translateX(-15px);\n                transform: translateX(-15px);\n}\n.channel-list .list-item[data-v-255e88ac]:hover{\n        -webkit-transform: scale(1.05, 1.05);\n                transform: scale(1.05, 1.05);\n        -webkit-transition: -webkit-transform .1s;\n        transition: -webkit-transform .1s;\n        transition: transform .1s;\n        transition: transform .1s, -webkit-transform .1s;\n        -webkit-transform: translateX(-10px);\n                transform: translateX(-10px);\n}\na[data-v-255e88ac]{\n        text-decoration: none;\n        /*color: #4A3A4A !important;*/\n        color: #C8BEDF !important;\n}\na[data-v-255e88ac]:hover{\n        color: #fff !important;\n}\n.channel-header[data-v-255e88ac]{\n        font-size: 1.2em;\n}\n.fa-plus-circle[data-v-255e88ac]{\n        color: #C8BEDF;\n}\n.fa-plus-circle[data-v-255e88ac]:hover{\n        /*color: #28a745;*/\n        color: #fff !important;\n        cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -7877,7 +7914,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.dropdown-menu[data-v-5db11841]{\n\t\toverflow-y: scroll;\n\t\tmax-height: 50vh;\n\t\twidth: 20em !important;\n}\n.dropdown-item[data-v-5db11841]{\n\t\twhite-space: normal !important;\n}\n.badge[data-v-5db11841]{\n\t\t-webkit-transform: translate(10px, -30px);\n\t\t        transform: translate(10px, -30px);\n        position: absolute;\n}\n", ""]);
+exports.push([module.i, "\n.nav-link:hover > span[data-v-5db11841]:hover{\n        cursor: pointer;\n}\n.dropdown-menu[data-v-5db11841]{\n\t\toverflow-y: scroll;\n\t\tmax-height: 50vh;\n\t\twidth: 20em !important;\n}\n.dropdown-item[data-v-5db11841]{\n\t\twhite-space: normal !important;\n}\n.badge[data-v-5db11841]{\n\t\t-webkit-transform: translate(10px, -30px);\n\t\t        transform: translate(10px, -30px);\n        position: absolute;\n}\n", ""]);
 
 // exports
 
@@ -7937,7 +7974,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.calling-text[data-v-90f93d58]:after {\n    content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A\";\n    font-weight: bold;\n    font-style: italic;\n    color: #28a745;\n    -webkit-animation-name: saving-text-data-v-90f93d58;\n            animation-name: saving-text-data-v-90f93d58;\n    -webkit-animation-duration: 1s;\n            animation-duration: 1s;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n}\n@-webkit-keyframes saving-text-data-v-90f93d58 {\n0% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes saving-text-data-v-90f93d58 {\n0% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n      content: \"\\1016\\102F\\1014\\103A\\1038\\1001\\1031\\102B\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n", ""]);
 
 // exports
 
@@ -44352,7 +44389,7 @@ var render = function() {
       [
         _c("div", { staticClass: "container" }, [
           _c("a", { staticClass: "navbar-brand", attrs: { href: "/" } }, [
-            _vm._v("Team Collaborate")
+            _vm._v("TeamCollaborate")
           ]),
           _vm._v(" "),
           _vm._m(0),
@@ -44803,22 +44840,26 @@ var staticRenderFns = [
           "div",
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c("h5", { staticClass: "modal-title mx-auto" }, [
-                  _vm._v("ဖုန်းခေါ")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _vm._v("\n\t        \t\tWill be avaivlable soon!\n\t      \t\t")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
+            _c("div", { staticClass: "modal-content bg-dark" }, [
+              _c("div", { staticClass: "modal-body text-center py-5" }, [
+                _c("span", {
+                  staticClass: "fas fa-10x fa-user text-muted m-5"
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("span", { staticClass: "text-danger m-5" }, [
+                  _vm._v("ယခုလောလောဆယ်တွင် ခေါ်ဆို၍ မရနိုင်သေးပါ။")
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-secondary",
+                    staticClass: "btn btn-danger mt-5",
                     attrs: { type: "button", "data-dismiss": "modal" }
                   },
                   [_vm._v("မလုပ်တော့ပါ")]
@@ -44985,6 +45026,48 @@ var render = function() {
           staticClass: "mm-text"
         },
         [
+          _c(
+            "div",
+            { staticClass: "announcement mt-3" },
+            [
+              _c("router-link", { attrs: { to: "/announcement" } }, [
+                _c("span", { staticClass: "channel-header" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "list-item",
+                      attrs: { id: "resource-center" },
+                      on: { click: _vm.changeChannel }
+                    },
+                    [_vm._v("အသိပေးချက်များ")]
+                  )
+                ])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "resource-center" },
+            [
+              _c("router-link", { attrs: { to: "/resource-center/notes" } }, [
+                _c("span", { staticClass: "channel-header" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "list-item",
+                      attrs: { id: "resource-center" },
+                      on: { click: _vm.changeChannel }
+                    },
+                    [_vm._v("Resource Center")]
+                  )
+                ])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "channels mt-3" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -45019,8 +45102,6 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
           _c("div", { staticClass: "direct-message mt-3" }, [
             _vm._m(1),
             _vm._v(" "),
@@ -45053,47 +45134,7 @@ var render = function() {
                 )
               })
             )
-          ]),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "resource-center mt-3" },
-            [
-              _c("router-link", { attrs: { to: "/resource-center/notes" } }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "list-item",
-                    attrs: { id: "resource-center" },
-                    on: { click: _vm.changeChannel }
-                  },
-                  [_vm._v("Resource Center")]
-                )
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "announcement mt-3" },
-            [
-              _c("router-link", { attrs: { to: "/announcement" } }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "list-item",
-                    attrs: { id: "resource-center" },
-                    on: { click: _vm.changeChannel }
-                  },
-                  [_vm._v("အသိပေးချက်များ")]
-                )
-              ])
-            ],
-            1
-          )
+          ])
         ]
       )
     ],
@@ -45170,10 +45211,23 @@ var render = function() {
         on: { click: function($event) {} }
       },
       [_c("span", { staticClass: "fas fa-plus" })]
-    )
+    ),
+    _vm._v(" "),
+    _vm._m(0)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container mt-3" }, [
+      _c("div", { staticClass: "text-center" }, [
+        _c("h1", [_vm._v("Will be available soon!")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -45828,17 +45882,16 @@ var render = function() {
       "a",
       {
         staticClass: "nav-link",
-        attrs: { role: "button", "data-toggle": "dropdown" }
+        attrs: {
+          role: "button",
+          "data-toggle": "dropdown",
+          "data-placement": "left",
+          title: "သတိပေးချက်များ"
+        },
+        on: { click: _vm.seenNotification }
       },
       [
-        _c("span", {
-          staticClass: "far fa-lg fa-bell",
-          on: {
-            click: function($event) {
-              _vm.isShowed = false
-            }
-          }
-        }),
+        _c("span", { staticClass: "far fa-lg fa-bell" }),
         _vm._v(" "),
         _c(
           "span",
@@ -45847,13 +45900,13 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.isShowed,
-                expression: "isShowed"
+                value: _vm.isNotified,
+                expression: "isNotified"
               }
             ],
             staticClass: "badge badge-danger"
           },
-          [_vm._v("9")]
+          [_vm._v(_vm._s(_vm.unreadNotifications))]
         )
       ]
     ),
@@ -45865,23 +45918,24 @@ var render = function() {
         _c("h6", { staticClass: "dropdown-header" }, [_vm._v("Notifications")]),
         _vm._v(" "),
         _vm._l(_vm.notifications, function(notification, index) {
-          return _c("div", [_vm._m(0, true)])
+          return _c("div", [
+            _c("div", { staticClass: "dropdown-item border-top" }, [
+              _c("p", [
+                _vm._v(
+                  _vm._s(notification.data.user) +
+                    " " +
+                    _vm._s(notification.data.action)
+                )
+              ])
+            ])
+          ])
         })
       ],
       2
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown-item border-top" }, [
-      _c("p", [_vm._v("Mg Mg posted new vide file in Resource Center")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -46171,22 +46225,26 @@ var staticRenderFns = [
           "div",
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c("h5", { staticClass: "modal-title mx-auto" }, [
-                  _vm._v("ဖုန်းခေါ")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _vm._v("\n\t        \t\tWill be avaivlable soon!\n\t      \t\t")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
+            _c("div", { staticClass: "modal-content bg-dark" }, [
+              _c("div", { staticClass: "modal-body text-center py-5" }, [
+                _c("span", {
+                  staticClass: "fas fa-10x fa-user text-muted m-5"
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("span", { staticClass: "text-danger m-5" }, [
+                  _vm._v("ယခုလောလောဆယ်တွင် ဖုန်းခေါ်၍ မရနိုင်သေးပါ။")
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-secondary",
+                    staticClass: "btn btn-danger mt-5",
                     attrs: { type: "button", "data-dismiss": "modal" }
                   },
                   [_vm._v("မလုပ်တော့ပါ")]
@@ -62910,13 +62968,14 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
 
 var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
     state: {
+        title: '',
         messages: '',
         activeUsers: [],
         currentUser: '',
         currentGroup: '',
+        notifications: [],
         currentChannel: '',
         channelDescription: '',
-        title: '',
         isMessageSending: false,
         isDataStillFetching: true
     },
@@ -62929,8 +62988,16 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
         assignMessages: function assignMessages(state, messages) {
             state.messages = messages;
         },
+        assignNotifications: function assignNotifications(state, notifications) {
+            state.notifications = notifications.filter(function (n) {
+                return n.data.group == state.currentGroup.id;
+            });
+        },
         updateMessages: function updateMessages(state, message) {
             state.messages.push(message);
+        },
+        updateNotifications: function updateNotifications(state, notification) {
+            state.notifications.push(notification);
         },
         assignActiveUsers: function assignActiveUsers(state, activeUsers) {
             state.activeUsers = activeUsers;
@@ -62946,7 +63013,16 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
         updateCurrentUser: function updateCurrentUser(state, currentUser) {
             state.currentUser = currentUser;
             Echo.private('App.User.' + currentUser.id).notification(function (notification) {
-                console.log(notification);
+                if (notification.data.group == state.currentGroup.id) {
+                    store.commit('updateNotifications', notification);
+                    toastr.info(notification.data.user + ' ' + notification.data.action, '', {
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        hideMethod: 'slideUp',
+                        positionClass: 'toast-bottom-right',
+                        timeOut: 3000
+                    });
+                }
             });
         },
         updateCurrentGroup: function updateCurrentGroup(state, currentGroup) {
@@ -63013,6 +63089,7 @@ var app = new Vue({
             store.commit('assignMessages', response.data.messages);
             store.commit('updateCurrentUser', response.data.user);
             store.commit('updateCurrentGroup', response.data.group);
+            store.commit('assignNotifications', response.data.notifications);
             if (response.data.group.channels.length) {
                 store.commit('updateCurrentChannel', 'channel' + response.data.group.channels[0].id);
                 store.commit('updateChannelDescription', response.data.group.channels[0].description);

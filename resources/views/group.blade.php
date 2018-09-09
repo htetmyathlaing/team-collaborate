@@ -13,6 +13,8 @@
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     <script src="{{ mix('/js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -24,6 +26,7 @@
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
     <style type="text/css" media="screen">
         hr {
@@ -44,7 +47,7 @@
             height: 50px;
             padding: 10px 16px;
             font-size: 18px;
-            line-height: 1.88;
+            line-height: 1.55;
             border-radius: 25px;
             /*box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);*/
             box-shadow: 5px 5px 25px 0 rgba(46,61,73,.2);

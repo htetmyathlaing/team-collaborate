@@ -1,14 +1,19 @@
 <template>
     <li class="nav-item dropdown  mr-3">
-        <a class="nav-link" role="button" data-toggle="dropdown">
-            <span class="far fa-lg fa-bell" @click="isShowed = false"></span>
-            <span v-show="isShowed" class="badge badge-danger">9</span>
+        <a class="nav-link" 
+            role="button" 
+            data-toggle="dropdown"
+            data-placement="left" 
+            title="သတိပေးချက်များ"
+            @click="seenNotification">
+            <span class="far fa-lg fa-bell"></span>
+            <span v-show="isNotified" class="badge badge-danger">{{ unreadNotifications }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
     	   <h6 class="dropdown-header">Notifications</h6>
     	   <div v-for="(notification,index) in notifications">
     	        <div class="dropdown-item border-top">
-    	        	<p>Mg Mg posted new vide file in Resource Center</p>
+    	        	<p>{{ notification.data.user }}&nbsp;{{ notification.data.action }}</p>
     	        </div>
     	   </div>
         </div>
@@ -16,20 +21,41 @@
 </template>
 
 <script>
+
     export default {
     	data(){
     		return {
-    			isShowed: true
+    			isNotified: true
     		}
     	},
         computed:{
         	notifications(){
-        		return [1,2,3,4,5,6,7,8,9,10,]
-        	}
+        		return this.$store.state.notifications
+        	},
+            unreadNotifications(){
+                this.isNotified = true
+                let n = this.$store.state.notifications.filter(n => n.read_at == null).length
+                if(!n)
+                    this.isNotified = false
+                return n
+            }
+        },
+        methods:{
+            seenNotification(){
+                this.isNotified = false
+                axios.put('/notifications', {
+                }).then(response => {
+                    this.$store.commit('assignNotifications', response.data)
+                })
+            }
         }
+       
     }
 </script>
 <style scoped>
+    .nav-link:hover > span:hover{
+        cursor: pointer;
+    }
 	.dropdown-menu{
 		overflow-y: scroll;
 		max-height: 50vh;

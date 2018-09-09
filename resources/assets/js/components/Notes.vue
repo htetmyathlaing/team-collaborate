@@ -225,6 +225,8 @@
         		axios.delete('/notes/' + this.selectedId).then(response => {
         			this.notes = this.notes.filter(n => n.id != this.selectedId)
         			this.selectedId = ''
+        			this.title=''
+	        		this.content = ''
 	        		this.writing = false
 	        		this.viewing = false
 	        		this.editing = false

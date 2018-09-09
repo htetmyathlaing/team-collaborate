@@ -8,6 +8,11 @@
             @click="">
             <span class="fas fa-plus"></span>
         </button>
+        <div class="container mt-3">
+            <div class="text-center">
+                <h1>Will be available soon!</h1>
+            </div>
+        </div>
     </div>
 </template>
 

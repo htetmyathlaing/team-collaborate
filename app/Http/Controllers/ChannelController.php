@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AppNotification;
 use App\Channel;
 use App\Group;
 use App\Message;
-
+use App\User;
 
 class ChannelController extends Controller
 {
@@ -61,6 +64,15 @@ class ChannelController extends Controller
         $channel->group_id = $request->input('group_id');
         $channel->save();
 
+        $users = Group::with('users')->find($channel->group_id)->users;
+        $notification = [
+            'user' => Auth::user()->name,
+            'group'  => $channel->group_id,
+            'action' => "created the $channel->name channel",
+        ];
+
+        Notification::send($users, new AppNotification($notification));
+
         return Group::with('channels')->with('users')->find($channel->group_id);
     }
 
@@ -109,14 +121,45 @@ class ChannelController extends Controller
         if($id[0]=='c'){
             $id = (int)filter_var($id, FILTER_SANITIZE_NUMBER_INT);
             $type = 'channel';
-            Channel::destroy($id);
-            Message::where('channel_id', $id)->delete();
+            if(sizeof(Channel::where('group_id', $group_id)->get()) == 1){
+                $notification = [
+                    'user' => Auth::user()->name,
+                    'group'  => $group_id,
+                    'action' => ",you cannot delete the last channel",
+                ];
+                Auth::user()->notify(new AppNotification($notification));
+                return 'false';
+            }
+            else {
+                Channel::destroy($id);
+                Message::where('channel_id', $id)->delete();
+
+                $users = Group::with('users')->find($group_id)->users;
+                $notification = [
+                    'user' => Auth::user()->name,
+                    'group'  => $group_id,
+                    'action' => "deleted the ".Channel::find($id)->name." channel",
+                ];
+                Notification::send($users, new AppNotification($notification));
+            }
         }
         else{
             $id = (int)filter_var($id, FILTER_SANITIZE_NUMBER_INT);
             $type= 'user';
             DB::delete('delete from group_user where group_id = ? and user_id  = ?', [$group_id, $id]);
-            Message::where('to_user_id', $id)->delete();
+            Message::where('user_id', $id)->orWhere('to_user_id', $id)->delete();
+
+            Channel::destroy($id);
+            Message::where('channel_id', $id)->delete();
+
+            $users = Group::with('users')->find($group_id)->users;
+            $notification = [
+                'user' => Auth::user()->name,
+                'group'  => $group_id,
+                'action' => "remove ".User::find($id)->name." from the group",
+            ];
+            Notification::send($users, new AppNotification($notification));
+
         }
         return json_encode(['type' => $type, 'id' => $id]);
     }

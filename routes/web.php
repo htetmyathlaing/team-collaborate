@@ -43,6 +43,12 @@ Route::resource('/files', 'FileController');
 
 Route::get('/getfiles/{group_id}/{type}', 'FileController@getFiles');
 
+Route::put('/notifications', function(){
+	Auth::user()->unreadNotifications->markAsRead();
+	return Auth::user()->notifications;
+
+});
+
 
 
 // Route::get('/test', function(){

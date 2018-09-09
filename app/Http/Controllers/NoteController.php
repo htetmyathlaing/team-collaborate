@@ -8,7 +8,7 @@ use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\NoteNotification;
+use App\Notifications\AppNotification;
 
 class NoteController extends Controller
 {
@@ -58,9 +58,13 @@ class NoteController extends Controller
         $note->save();
 
         $users = Group::with('users')->find($note->group_id)->users;
-        $notification = ['user_name' => Auth::id(), 'action' => "Posted a note on title $note->title"];
+        $notification = [
+            'user' => Auth::user()->name,
+            'group'  => $note->group_id,
+            'action' => "posted a note on title $note->title",
+        ];
 
-        Notification::send($users, new NoteNotification($notification));
+        Notification::send($users, new AppNotification($notification));
         
         return ['id' => $note->id, 'title' => $note->title];
     }
@@ -108,7 +112,17 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
+         $users = Group::with('users')->find($note->group_id)->users;
+
+        $notification = [
+            'user' => Auth::user()->name,
+            'group'  => $note->group_id,
+            'action' => "delete $note->title from the notes",
+        ];
+
         $note->delete();
+
+        Notification::send($users, new AppNotification($notification));
     }
 
     /**

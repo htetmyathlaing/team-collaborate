@@ -125,6 +125,7 @@ class GroupController extends Controller
     {
         return ['user' => User::with('involvedGroups')->find(Auth::id()), 
                 'group' => Group::with('channels')->with('users')->find($group_id),
+                'notifications' => User::find(Auth::id())->notifications,
                 'messages' => Message::where('group_id', $group_id)
                                      ->where('channel_id', Group::with('channels')->find($group_id)->channels[0]->id)
                                      ->with('user')

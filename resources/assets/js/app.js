@@ -12,7 +12,7 @@ window.Vue = require('vue')
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import VueContentPlaceholders from 'vue-content-placeholders'
-import Editor from '@tinymce/tinymce-vue';
+import Editor from '@tinymce/tinymce-vue'
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
@@ -69,13 +69,14 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
   state: {
+    title: '',
     messages:'',
     activeUsers:[],
     currentUser: '',
     currentGroup: '',
+    notifications: [],
     currentChannel: '',
     channelDescription: '',
-    title: '',
     isMessageSending: false,
     isDataStillFetching: true
   },
@@ -88,8 +89,14 @@ const store = new Vuex.Store({
     assignMessages (state, messages) {
       state.messages = messages
     },
+    assignNotifications (state, notifications) {
+      state.notifications = notifications.filter(n => n.data.group == state.currentGroup.id)
+    },
     updateMessages (state, message) {
       state.messages.push(message)
+    },
+    updateNotifications (state, notification){
+        state.notifications.push(notification)
     },
     assignActiveUsers (state, activeUsers) {
       state.activeUsers = activeUsers
@@ -104,7 +111,17 @@ const store = new Vuex.Store({
       state.currentUser = currentUser
       Echo.private('App.User.' + currentUser.id)
             .notification((notification) => {
-                console.log(notification);
+                if(notification.data.group == state.currentGroup.id){
+                    store.commit('updateNotifications', notification)
+                    toastr.info(notification.data.user+' '+notification.data.action, '' , 
+                    {
+                        progressBar: true,
+                        showMethod:'slideDown',
+                        hideMethod:'slideUp',
+                        positionClass: 'toast-bottom-right',
+                        timeOut: 3000
+                    })
+                }
             });
     },
     updateCurrentGroup (state, currentGroup) {
@@ -175,6 +192,7 @@ const app = new Vue({
             store.commit('assignMessages', response.data.messages)
             store.commit('updateCurrentUser', response.data.user)
             store.commit('updateCurrentGroup', response.data.group)
+            store.commit('assignNotifications', response.data.notifications)
             if(response.data.group.channels.length){
                 store.commit('updateCurrentChannel', 'channel'+response.data.group.channels[0].id)
                 store.commit('updateChannelDescription', response.data.group.channels[0].description)

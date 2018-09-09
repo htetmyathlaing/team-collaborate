@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AppNotification;
 
 class FileController extends Controller
 {
@@ -54,6 +57,15 @@ class FileController extends Controller
         $file->user_id = Auth::id();
         $file->save();
 
+        $users = Group::with('users')->find($file->group_id)->users;
+        $notification = [
+            'user' => Auth::user()->name,
+            'group'  => $file->group_id,
+            'action' => "uploaded $file->file_title",
+        ];
+
+        Notification::send($users, new AppNotification($notification));
+
         return ['id' => $file->id, 'file_title' => $file->file_title, 'user' =>  Auth::user()];
     }
 
@@ -99,8 +111,18 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
+        $users = Group::with('users')->find($file->group_id)->users;
+
+        $notification = [
+            'user' => Auth::user()->name,
+            'group'  => $file->group_id,
+            'action' => "remove $file->file_title from the group",
+        ];
+
         Storage::delete('public\/files\/'.$file->file_name);
         $file->delete();
+
+        Notification::send($users, new AppNotification($notification));
     }
 
     /**

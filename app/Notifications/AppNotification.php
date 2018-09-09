@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class NoteNotification extends Notification
+class AppNotification extends Notification
 {
     use Queueable;
 
@@ -55,7 +55,8 @@ class NoteNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user' => $this->notification['user_name'],
+            'user' => $this->notification['user'],
+            'group' => $this->notification['group'],
             'action' => $this->notification['action'],
         ];
     }
@@ -69,8 +70,12 @@ class NoteNotification extends Notification
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'user' => $this->notification['user_name'],
-            'action' => $this->notification['action'],
+            'data' => [
+                'user' => $this->notification['user'],
+                'group' => $this->notification['group'],
+                'action' => $this->notification['action'],
+            ],
+            'read_at' => null,
         ]);
     }
 }

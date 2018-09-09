@@ -173,6 +173,7 @@
         			this.files = this.files.filter(n => n.id != this.selectedId)
         			this.selectedId = ''
 	        		this.deleting = false
+	        		this.viewing=false
               		$('#deleteFileModal').modal("hide") 
         		}) 
         	},

@@ -7,6 +7,26 @@
         </content-placeholders>
 
         <div v-show="!isDataStillFetching" class="mm-text">
+            <div class="announcement mt-3">
+                <router-link to="/announcement">
+                    <span class="channel-header">
+                        <a class="list-item"
+                        id="resource-center"
+                        @click="changeChannel">အသိပေးချက်များ</a>
+                    </span>
+                </router-link>
+            </div>
+
+            <div class="resource-center">
+                <router-link to="/resource-center/notes">
+                    <span class="channel-header">
+                        <a class="list-item"
+                        id="resource-center"
+                        @click="changeChannel">Resource Center</a>
+                    </span>
+                </router-link>
+            </div>
+
             <div class="channels mt-3">
                 <div class="channel-header">
                     <a href="#">ခေါင်းစဉ်ခွဲများ</a>
@@ -31,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <hr>
+            <!-- <hr> -->
             <div class="direct-message mt-3">
                 <div class="channel-header">
                     <a href="#" class="">တိုက်ရိုက်စာတိုများ</a>
@@ -53,22 +73,6 @@
                             @click="changeChannel">{{ user.name }}</a>
                     </router-link>
                 </div>
-            </div>
-
-            <hr>
-            <div class="resource-center mt-3">
-                <router-link to="/resource-center/notes">
-                    <a class="list-item"
-                        id="resource-center"
-                        @click="changeChannel">Resource Center</a>
-                </router-link>
-            </div>
-            <div class="announcement mt-3">
-                <router-link to="/announcement">
-                    <a class="list-item"
-                        id="resource-center"
-                        @click="changeChannel">အသိပေးချက်များ</a>
-                </router-link>
             </div>
         </div>
     </div>	
@@ -175,7 +179,7 @@
     a:hover{
         color: #fff !important;
     }
-    .channel-header a{
+    .channel-header{
         font-size: 1.2em;
     }
     .fa-plus-circle{
