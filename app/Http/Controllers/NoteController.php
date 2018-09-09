@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Note;
+use App\User;
+use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NoteNotification;
 
 class NoteController extends Controller
 {
@@ -53,6 +57,11 @@ class NoteController extends Controller
         $note->user_id = Auth::id();
         $note->save();
 
+        $users = Group::with('users')->find($note->group_id)->users;
+        $notification = ['user_name' => Auth::id(), 'action' => "Posted a note on title $note->title"];
+
+        Notification::send($users, new NoteNotification($notification));
+        
         return ['id' => $note->id, 'title' => $note->title];
     }
 

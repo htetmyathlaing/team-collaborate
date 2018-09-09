@@ -6,15 +6,15 @@
             <content-placeholders-text :lines="3" class="mt-4" />
         </content-placeholders>
 
-        <div v-show="!isDataStillFetching">
+        <div v-show="!isDataStillFetching" class="mm-text">
             <div class="channels mt-3">
                 <div class="channel-header">
-                    <a href="#">ချန်နယ်များ</a>
+                    <a href="#">ခေါင်းစဉ်ခွဲများ</a>
                     <span class="fas fa-plus-circle float-right m-1"  
                             data-toggle="modal" 
                             data-target="#createChannelModal"
                             data-placement="top" 
-                            title="ချန်နယ်အသစ်တစ်ခု ဖန်တီးမည်"></span>
+                            title="ခေါင်းစဉ်ခွဲအသစ်တစ်ခု ဖန်တီးမည်"></span>
                 </div>
                 <hr>
                 <div class="scroll-view">
@@ -61,6 +61,13 @@
                     <a class="list-item"
                         id="resource-center"
                         @click="changeChannel">Resource Center</a>
+                </router-link>
+            </div>
+            <div class="announcement mt-3">
+                <router-link to="/announcement">
+                    <a class="list-item"
+                        id="resource-center"
+                        @click="changeChannel">အသိပေးချက်များ</a>
                 </router-link>
             </div>
         </div>

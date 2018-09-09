@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Message;
 use App\Group;
 use App\Channel;
+use App\Note;
+use App\File;
 
 class GroupController extends Controller
 {
@@ -45,7 +49,21 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        $group = new Group();
+        $group->name = $request->input('name');
+        $group->description = $request->input('description');
+        $group->user_id = Auth::id();
+        $group->save();
+
+        $channel = new Channel();
+        $channel->name = '#general';
+        $channel->description = 'Discussing about general things';
+        $channel->group_id = $group->id;
+        $channel->save();
+
+        DB::insert('insert into group_user (user_id, group_id) values (?, ?)', [Auth::id(), $group->id]);
+
+        return $group;
     }
 
 
@@ -80,7 +98,21 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $group = Group::find($id);
+        if($group){
+            Group::destroy($id);
+            Channel::where('group_id', $id)->delete();
+            Message::where('group_id', $id)->delete();
+            Note::where('group_id', $id)->delete();
+            DB::table('group_user')->where('group_id', $id)->delete();
+
+            $files = File::where('group_id', $id)->get();
+            foreach ($files as $file) {
+                Storage::delete('public\/files\/'.$file->file_name);
+                File::find($file->id)->delete();  
+            }
+        }
+        return "true";
     }
 
     /**

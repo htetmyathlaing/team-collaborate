@@ -18,6 +18,8 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Padauk:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Padauk:400,700" rel="stylesheet">
 
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
@@ -42,13 +44,17 @@
             height: 50px;
             padding: 10px 16px;
             font-size: 18px;
-            line-height: 1.33;
+            line-height: 1.88;
             border-radius: 25px;
+            /*box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);*/
             box-shadow: 5px 5px 25px 0 rgba(46,61,73,.2);
         }
         .btn-circle:hover{
             box-shadow: 2px 4px 8px 0 rgba(46,61,73,.3);
             transition: box-shadow .2s ease-in-out;
+        }
+        .mm-text{
+            font-family: 'Padauk', sans-serif;
         }
     </style>
     <script>
@@ -71,7 +77,7 @@
             </div>      
         </div>
         <create-channel-modal></create-channel-modal>
-        <create-group-modal></create-group-modal>
+        {{-- <create-group-modal></create-group-modal> --}}
         <add-member-modal></add-member-modal>
         <delete-channel-modal></delete-channel-modal>
         <voice-call-modal></voice-call-modal>

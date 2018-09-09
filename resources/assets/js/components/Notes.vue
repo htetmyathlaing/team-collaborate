@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mm-text">
     	<!-- <a v-show="!viewing"
     		class="btn btn-success m-3"
     		data-toggle="modal"

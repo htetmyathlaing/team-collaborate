@@ -1,18 +1,14 @@
 <template>
-    <li class="nav-item dropdown">
-        <a class="nav-link mr-3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="fas fa-lg fa-bullhorn" @click="isShowed = false"></span>
-            <span v-show="isShowed" class="badge badge-danger">1</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-           <h6 class="dropdown-header">Announcements</h6>
-           <div v-for="(notification,index) in notifications">
-                <div class="dropdown-item border-top">
-                    <p>Mg Mg posted new vide file in Resource Center</p>
-                </div>
-           </div>
-        </div>
-    </li>
+    <div class="container mt-3">
+        <button type="button"
+            class="btn btn-sm btn-warning btn-circle m-3"
+            data-toggle="modal"
+            data-placement="right" 
+            title="ကြေငြာချက်တစ်ခုပြုလုပ်ရန်"
+            @click="">
+            <span class="fas fa-plus"></span>
+        </button>
+    </div>
 </template>
 
 <script>

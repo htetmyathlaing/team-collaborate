@@ -2053,6 +2053,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             _this.isMemberAdding = false;
                         });
                         $('#addMemberModal').modal("hide");
+                        _this.email = '';
                         $('.list-item').attr("class", "list-item");
                     }
                 });
@@ -2072,10 +2073,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -2444,8 +2441,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             if (this.name && this.description) {
-                $('#inputName #inputDescription').removeClass('is-invalid');
-                $('#inputName #inputDescription').addClass('is-valid');
+                $('#inputName,#inputDescription').removeClass('is-invalid');
+                $('#inputName,#inputDescription').addClass('is-valid');
                 this.isChannelCreating = true;
 
                 axios.post('/channels', {
@@ -2457,7 +2454,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.isChannelCreating = false;
                     _this.name = '';
                     _this.description = '';
-                    $('#inputName #inputDescription').removeClass('is-valid');
+                    $('#inputName,#inputDescription').removeClass('is-valid');
                     $('#createChannelModal').modal("hide");
 
                     _this.$store.commit('updateCurrentChannel', 'channel' + _this.$store.state.currentGroup.channels[_this.$store.state.currentGroup.channels.length - 1].id);
@@ -2719,6 +2716,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: [],
@@ -2837,8 +2841,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            deleting: false
+        };
+    },
+
     computed: {
         currentGroup: function currentGroup() {
             return this.$store.state.currentGroup;
@@ -2851,22 +2887,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        changeGroup: function changeGroup(event) {
+        // changeGroup: function(event){
+        //     this.$store.commit('toggleIsDataStillFetching')
+        //     this.$store.commit('assignMessages', '')
+        //     console.log(this.$store.state.messages)
+        //     axios.get('/init/'+ event.target.id).then(response => {
+        //         this.$store.commit('assignMessages', response.data.messages)
+        //         this.$store.commit('updateCurrentUser', response.data.user)
+        //         // this.$store.commit('updateUsers', response.data.group.users)
+        //         // this.$store.commit('updateChannels', response.data.group.channels)
+        //         this.$store.commit('updateCurrentGroup', response.data.group)
+        //         this.$store.commit('updateCurrentChannel', response.data.group.channels[0].id)
+        //         this.$store.commit('updateTitle', response.data.group.channels[0].name)
+
+        //         this.$store.commit('toggleIsDataStillFetching')
+        //     })
+        // },
+        deleteGroup: function deleteGroup(event) {
             var _this = this;
 
-            this.$store.commit('toggleIsDataStillFetching');
-            this.$store.commit('assignMessages', '');
-            console.log(this.$store.state.messages);
-            axios.get('/init/' + event.target.id).then(function (response) {
-                _this.$store.commit('assignMessages', response.data.messages);
-                _this.$store.commit('updateCurrentUser', response.data.user);
-                // this.$store.commit('updateUsers', response.data.group.users)
-                // this.$store.commit('updateChannels', response.data.group.channels)
-                _this.$store.commit('updateCurrentGroup', response.data.group);
-                _this.$store.commit('updateCurrentChannel', response.data.group.channels[0].id);
-                _this.$store.commit('updateTitle', response.data.group.channels[0].name);
-
-                _this.$store.commit('toggleIsDataStillFetching');
+            this.deleting = true;
+            axios.delete('/groups/' + this.currentGroup.id).then(function (response) {
+                console.log(response.data);
+                _this.deleting = false;
+                $('#deleteGroupModal').hide();
+                location.href = '/home';
             });
         }
     }
@@ -7667,7 +7712,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.notification-corner > a[data-v-046a7e32]{\n    color: rgb(255,255,255,0.5) !important\n}\n.notification-corner > a[data-v-046a7e32]:hover{\n    color: rgb(255,255,255) !important\n}\na[data-v-046a7e32]:hover{\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.notification-corner > a[data-v-046a7e32]{\n    color: rgb(255,255,255,0.5) !important\n}\n.notification-corner > a[data-v-046a7e32]:hover{\n    color: rgb(255,255,255) !important\n}\na[data-v-046a7e32]:hover{\n  cursor: pointer;\n}\nအဖွဲ့ကို\n  .deleting-text[data-v-046a7e32]:after {\n      content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n      font-weight: bold;\n      font-style: italic;\n      color: red;\n      -webkit-animation-name: deleting-text-data-v-046a7e32;\n              animation-name: deleting-text-data-v-046a7e32;\n      -webkit-animation-duration: 1s;\n              animation-duration: 1s;\n      -webkit-animation-iteration-count: infinite;\n              animation-iteration-count: infinite;\n}\n@-webkit-keyframes deleting-text-data-v-046a7e32 {\n0% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes deleting-text-data-v-046a7e32 {\n0% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n        content: \"\\1021\\1016\\103D\\1032\\1037\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n", ""]);
 
 // exports
 
@@ -7847,7 +7892,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -7922,7 +7967,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.container[data-v-d2364406] {\n        font-family: Helvetica;\n        padding: 1px;\n        margin-bottom: 5px;\n}\n.loader-text[data-v-d2364406]:after {\n\t    content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A\";\n\t    font-weight: bold;\n\t    font-style: italic;\n\t    color: #28a745;\n\t    -webkit-animation-name: loading-text-data-v-d2364406;\n\t            animation-name: loading-text-data-v-d2364406;\n\t    -webkit-animation-duration: 1s;\n\t            animation-duration: 1s;\n\t    -webkit-animation-iteration-count: infinite;\n\t            animation-iteration-count: infinite;\n}\n@-webkit-keyframes loading-text-data-v-d2364406 {\n0% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes loading-text-data-v-d2364406 {\n0% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1001\\103B\\1014\\103A\\1014\\101A\\103A\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-d2364406] {\n        font-family: Helvetica;\n        padding: 1px;\n        margin-bottom: 5px;\n}\n.loader-text[data-v-d2364406]:after {\n\t    content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A\";\n\t    font-weight: bold;\n\t    font-style: italic;\n\t    color: #28a745;\n\t    -webkit-animation-name: loading-text-data-v-d2364406;\n\t            animation-name: loading-text-data-v-d2364406;\n\t    -webkit-animation-duration: 1s;\n\t            animation-duration: 1s;\n\t    -webkit-animation-iteration-count: infinite;\n\t            animation-iteration-count: infinite;\n}\n@-webkit-keyframes loading-text-data-v-d2364406 {\n0% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes loading-text-data-v-d2364406 {\n0% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1001\\1031\\102B\\1004\\103A\\1038\\1005\\1009\\103A\\1001\\103D\\1032\\1000\\102D\\102F   \\1016\\1014\\103A\\1010\\102E\\1038\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n", ""]);
 
 // exports
 
@@ -44300,145 +44345,219 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "nav",
-    { staticClass: "navbar navbar-expand-lg navbar-dark bg-info sticky-top" },
-    [
-      _c("div", { staticClass: "container" }, [
-        _c("a", { staticClass: "navbar-brand", attrs: { href: "/" } }, [
-          _vm._v("Team Collaborate")
-        ]),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "collapse navbar-collapse",
-            attrs: { id: "navbarSupportedContent" }
-          },
-          [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("div", { staticClass: "ml-auto notification-corner" }, [
-              _c(
-                "ul",
-                { staticClass: "navbar-nav" },
-                [
-                  _c("announcement"),
-                  _vm._v(" "),
-                  _c("notifications"),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: !_vm.isDataStillFetching,
-                          expression: "!isDataStillFetching"
-                        }
-                      ],
-                      staticClass: "nav-item dropdown"
-                    },
-                    [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "nav-link dropdown-toggle",
-                          attrs: {
-                            role: "button",
-                            "data-toggle": "dropdown",
-                            "aria-haspopup": "true",
-                            "aria-expanded": "false"
+  return _c("div", [
+    _c(
+      "nav",
+      { staticClass: "navbar navbar-expand-lg navbar-dark bg-info sticky-top" },
+      [
+        _c("div", { staticClass: "container" }, [
+          _c("a", { staticClass: "navbar-brand", attrs: { href: "/" } }, [
+            _vm._v("Team Collaborate")
+          ]),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "collapse navbar-collapse",
+              attrs: { id: "navbarSupportedContent" }
+            },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "ml-auto notification-corner" }, [
+                _c(
+                  "ul",
+                  { staticClass: "navbar-nav" },
+                  [
+                    _c("notifications"),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.isDataStillFetching,
+                            expression: "!isDataStillFetching"
                           }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.currentGroup.name) +
-                              "                                \n                            "
-                          ),
-                          _c("span", { staticClass: "caret" })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "dropdown-menu justify-content-center" },
-                        [
-                          _c("a", { staticClass: "dropdown-item" }, [
-                            _vm._v(_vm._s(_vm.currentUser.email))
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "dropdown-divider" }),
-                          _vm._v(" "),
-                          _c("h6", { staticClass: "dropdown-header" }, [
-                            _vm._v("အဖွဲ့များ")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.currentUser.involved_groups, function(
-                            group
-                          ) {
-                            return _c(
+                        ],
+                        staticClass: "nav-item dropdown"
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link dropdown-toggle",
+                            attrs: {
+                              role: "button",
+                              "data-toggle": "dropdown",
+                              "aria-haspopup": "true",
+                              "aria-expanded": "false"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(_vm.currentGroup.name) +
+                                "                                \n                                "
+                            ),
+                            _c("span", { staticClass: "caret" })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "dropdown-menu dropdown-menu-right justify-content-center text-center"
+                          },
+                          [
+                            _c("a", { staticClass: "dropdown-item" }, [
+                              _vm._v(_vm._s(_vm.currentUser.email))
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dropdown-divider" }),
+                            _vm._v(" "),
+                            _c(
+                              "h6",
+                              { staticClass: "dropdown-header mm-text" },
+                              [_vm._v("အသေးစိတ်အချက်အလက်များ")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "text-info",
+                                attrs: { id: _vm.currentGroup.id }
+                              },
+                              [_vm._v(_vm._s(_vm.currentGroup.description))]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dropdown-divider" }),
+                            _vm._v(" "),
+                            _c(
                               "a",
                               {
-                                staticClass: "dropdown-item",
-                                attrs: { id: group.id, href: "#" },
-                                on: { click: _vm.changeGroup }
+                                staticClass: "dropdown-item mm-text",
+                                attrs: {
+                                  href: "#",
+                                  "data-toggle": "modal",
+                                  "data-target": "#deleteGroupModal"
+                                }
                               },
-                              [_vm._v(_vm._s(group.name))]
+                              [_vm._v("အဖွဲ့ကိုဖျက်ရန်")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dropdown-divider" }),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "dropdown-item mm-text",
+                                attrs: {
+                                  href: "/logout",
+                                  onclick:
+                                    "event.preventDefault();\n                                                                                   document.getElementById('logout-form').submit();"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                          ထွက်ရန်\n                                "
+                                )
+                              ]
                             )
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "dropdown-divider" }),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "dropdown-item",
-                              attrs: {
-                                href: "#",
-                                "data-toggle": "modal",
-                                "data-target": "#createGroupModal"
-                              }
-                            },
-                            [_vm._v("အဖွဲ့သစ် ဖန်တီးမည်")]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "dropdown-divider" }),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "dropdown-item",
-                              attrs: {
-                                href: "/logout",
-                                onclick:
-                                  "event.preventDefault();\n                                                                               document.getElementById('logout-form').submit();"
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                      ထွက်ရန်\n                            "
-                              )
-                            ]
-                          )
-                        ],
-                        2
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
+                          ]
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade mt-5 mm-text",
+        attrs: {
+          id: "deleteGroupModal",
+          tabindex: "-1",
+          role: "dialog",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._v(
+                  "\n                    ဤအဖွဲ့ကို ဖျက်ပါလိမ့်မည်။\n                        \n                    "
+                ),
+                _c("div", {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.deleting,
+                      expression: "deleting"
+                    }
+                  ],
+                  staticClass: "deleting-text"
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      disabled: _vm.deleting
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        မလုပ်တော့ပါ\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button", disabled: _vm.deleting },
+                    on: { click: _vm.deleteGroup }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        ဖျက်မည်\n                    "
+                    )
+                  ]
+                )
+              ])
             ])
           ]
         )
-      ])
-    ]
-  )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -44470,6 +44589,16 @@ var staticRenderFns = [
         _c("a", { staticClass: "nav-link", attrs: { href: "/home" } }, [
           _c("span", { staticClass: "fas fa-lg fa-home" })
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title mx-auto" }, [
+        _vm._v("ဖျက်မှာသေချာပြီလား?")
       ])
     ])
   }
@@ -44852,7 +44981,8 @@ var render = function() {
               value: !_vm.isDataStillFetching,
               expression: "!isDataStillFetching"
             }
-          ]
+          ],
+          staticClass: "mm-text"
         },
         [
           _c("div", { staticClass: "channels mt-3" }, [
@@ -44944,6 +45074,25 @@ var render = function() {
               ])
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "announcement mt-3" },
+            [
+              _c("router-link", { attrs: { to: "/announcement" } }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "list-item",
+                    attrs: { id: "resource-center" },
+                    on: { click: _vm.changeChannel }
+                  },
+                  [_vm._v("အသိပေးချက်များ")]
+                )
+              ])
+            ],
+            1
           )
         ]
       )
@@ -44957,7 +45106,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "channel-header" }, [
-      _c("a", { attrs: { href: "#" } }, [_vm._v("ချန်နယ်များ")]),
+      _c("a", { attrs: { href: "#" } }, [_vm._v("ခေါင်းစဉ်ခွဲများ")]),
       _vm._v(" "),
       _c("span", {
         staticClass: "fas fa-plus-circle float-right m-1",
@@ -44965,7 +45114,7 @@ var staticRenderFns = [
           "data-toggle": "modal",
           "data-target": "#createChannelModal",
           "data-placement": "top",
-          title: "ချန်နယ်အသစ်တစ်ခု ဖန်တီးမည်"
+          title: "ခေါင်းစဉ်ခွဲအသစ်တစ်ခု ဖန်တီးမည်"
         }
       })
     ])
@@ -45007,70 +45156,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", { staticClass: "nav-item dropdown" }, [
+  return _c("div", { staticClass: "container mt-3" }, [
     _c(
-      "a",
+      "button",
       {
-        staticClass: "nav-link mr-3",
+        staticClass: "btn btn-sm btn-warning btn-circle m-3",
         attrs: {
-          role: "button",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }
+          type: "button",
+          "data-toggle": "modal",
+          "data-placement": "right",
+          title: "ကြေငြာချက်တစ်ခုပြုလုပ်ရန်"
+        },
+        on: { click: function($event) {} }
       },
-      [
-        _c("span", {
-          staticClass: "fas fa-lg fa-bullhorn",
-          on: {
-            click: function($event) {
-              _vm.isShowed = false
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.isShowed,
-                expression: "isShowed"
-              }
-            ],
-            staticClass: "badge badge-danger"
-          },
-          [_vm._v("1")]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "dropdown-menu dropdown-menu-right" },
-      [
-        _c("h6", { staticClass: "dropdown-header" }, [_vm._v("Announcements")]),
-        _vm._v(" "),
-        _vm._l(_vm.notifications, function(notification, index) {
-          return _c("div", [_vm._m(0, true)])
-        })
-      ],
-      2
+      [_c("span", { staticClass: "fas fa-plus" })]
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown-item border-top" }, [
-      _c("p", [_vm._v("Mg Mg posted new vide file in Resource Center")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -46114,7 +46217,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container mm-text" }, [
     _c(
       "button",
       {
@@ -46588,7 +46691,7 @@ var render = function() {
                   attrs: {
                     type: "text",
                     id: "inputName",
-                    placeholder: "ချန်နယ်အမည် ထည့်သွင်းပါ။",
+                    placeholder: "ခေါင်းစဉ်ခွဲအမည် ထည့်သွင်းပါ။",
                     required: "",
                     autofocus: ""
                   },
@@ -46623,7 +46726,7 @@ var render = function() {
                   staticClass: "col-sm-3 col-form-label",
                   attrs: { for: "inputDescription" }
                 },
-                [_vm._v("ဖော်ပြချက်")]
+                [_vm._v("အချက်အလက်")]
               ),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-9" }, [
@@ -46641,7 +46744,7 @@ var render = function() {
                     type: "text",
                     id: "inputDescription",
                     placeholder:
-                      "ဤချန်နယ်နှင့် ပတ်သက်သော အကြောင်းအရာဖော်ပြချက်ထည့်ပါ။"
+                      "ဤခေါင်းစဉ်ခွဲနှင့် ပတ်သက်သော အကြောင်းအရာဖော်ပြချက်ထည့်ပါ။"
                   },
                   domProps: { value: _vm.description },
                   on: {
@@ -46721,7 +46824,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c("h5", { staticClass: "modal-title mx-auto" }, [
-        _vm._v("ချန်နယ်အသစ်တစ်ခု ဖန်တီးမည်")
+        _vm._v("ခေါင်းစဉ်ခွဲအသစ်တစ်ခု ဖန်တီးမည်")
       ])
     ])
   },
@@ -46742,7 +46845,11 @@ var staticRenderFns = [
     return _c(
       "span",
       { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong", [_vm._v("ချန်နယ်နှင့်ပတ်သက်သော​ဖော်ပြချက် ထည့်ပေးရမည်။")])]
+      [
+        _c("strong", [
+          _vm._v("ခေါင်းစဉ်ခွဲနှင့်ပတ်သက်သော​ဖော်ပြချက် ထည့်ပေးရမည်။")
+        ])
+      ]
     )
   },
   function() {
@@ -47037,7 +47144,7 @@ var render = function() {
             expression: "choosing"
           }
         ],
-        staticClass: "form-group row"
+        staticClass: "form-group row mm-text"
       },
       [
         _c(
@@ -62729,16 +62836,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tinymce_tinymce_vue__ = __webpack_require__("./node_modules/@tinymce/tinymce-vue/lib/es2015/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Chat_vue__ = __webpack_require__("./resources/assets/js/components/Chat.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Chat_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Chat_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_ResourceCenter_vue__ = __webpack_require__("./resources/assets/js/components/ResourceCenter.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_ResourceCenter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_ResourceCenter_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Notes_vue__ = __webpack_require__("./resources/assets/js/components/Notes.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Notes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Notes_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Videos_vue__ = __webpack_require__("./resources/assets/js/components/Videos.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Videos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_Videos_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Photos_vue__ = __webpack_require__("./resources/assets/js/components/Photos.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Photos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_Photos_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Extras_vue__ = __webpack_require__("./resources/assets/js/components/Extras.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Extras_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_Extras_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Announcement_vue__ = __webpack_require__("./resources/assets/js/components/Announcement.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Announcement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Announcement_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_ResourceCenter_vue__ = __webpack_require__("./resources/assets/js/components/ResourceCenter.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_ResourceCenter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_ResourceCenter_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Notes_vue__ = __webpack_require__("./resources/assets/js/components/Notes.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Notes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_Notes_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Videos_vue__ = __webpack_require__("./resources/assets/js/components/Videos.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Videos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_Videos_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Photos_vue__ = __webpack_require__("./resources/assets/js/components/Photos.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Photos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_Photos_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Extras_vue__ = __webpack_require__("./resources/assets/js/components/Extras.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Extras_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_Extras_vue__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -62771,7 +62880,7 @@ Vue.component('chat-composer', __webpack_require__("./resources/assets/js/compon
 Vue.component('left-colum', __webpack_require__("./resources/assets/js/components/LeftColum.vue"));
 // Vue.component('right-colum', require('./components/RightColum.vue'))
 Vue.component('chatroom-details', __webpack_require__("./resources/assets/js/components/ChatRoomDetails.vue"));
-Vue.component('announcement', __webpack_require__("./resources/assets/js/components/Announcement.vue"));
+// Vue.component('announcement', require('./components/Announcement.vue'))
 Vue.component('nav-bar', __webpack_require__("./resources/assets/js/components/NavBar.vue"));
 Vue.component('notifications', __webpack_require__("./resources/assets/js/components/Notifications.vue"));
 Vue.component('create-channel-modal', __webpack_require__("./resources/assets/js/components/CreateChannelModal.vue"));
@@ -62788,10 +62897,11 @@ Vue.component('video-call-modal', __webpack_require__("./resources/assets/js/com
 
 
 
-var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_4__components_Chat_vue___default.a }, {
+
+var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_4__components_Chat_vue___default.a }, { path: '/announcement', component: __WEBPACK_IMPORTED_MODULE_5__components_Announcement_vue___default.a }, {
     path: '/resource-center',
-    component: __WEBPACK_IMPORTED_MODULE_5__components_ResourceCenter_vue___default.a,
-    children: [{ path: 'notes', component: __WEBPACK_IMPORTED_MODULE_6__components_Notes_vue___default.a }, { path: 'videos', component: __WEBPACK_IMPORTED_MODULE_7__components_Videos_vue___default.a }, { path: 'photos', component: __WEBPACK_IMPORTED_MODULE_8__components_Photos_vue___default.a }, { path: 'extras', component: __WEBPACK_IMPORTED_MODULE_9__components_Extras_vue___default.a }]
+    component: __WEBPACK_IMPORTED_MODULE_6__components_ResourceCenter_vue___default.a,
+    children: [{ path: 'notes', component: __WEBPACK_IMPORTED_MODULE_7__components_Notes_vue___default.a }, { path: 'videos', component: __WEBPACK_IMPORTED_MODULE_8__components_Videos_vue___default.a }, { path: 'photos', component: __WEBPACK_IMPORTED_MODULE_9__components_Photos_vue___default.a }, { path: 'extras', component: __WEBPACK_IMPORTED_MODULE_10__components_Extras_vue___default.a }]
 }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
@@ -62803,8 +62913,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
         messages: '',
         activeUsers: [],
         currentUser: '',
-        // users:[],
-        // channels: [],
         currentGroup: '',
         currentChannel: '',
         channelDescription: '',
@@ -62837,14 +62945,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
         },
         updateCurrentUser: function updateCurrentUser(state, currentUser) {
             state.currentUser = currentUser;
+            Echo.private('App.User.' + currentUser.id).notification(function (notification) {
+                console.log(notification);
+            });
         },
-
-        // updateUsers (state, users) {
-        //   state.users = users
-        // },
-        // updateChannels (state, channels) {
-        //   state.channels = channels
-        // },
         updateCurrentGroup: function updateCurrentGroup(state, currentGroup) {
             state.currentGroup = currentGroup;
             Echo.join('chatroom.' + store.state.currentGroup.id).here(function (users) {
@@ -62903,22 +63007,7 @@ var app = new Vue({
             return store.state.currentGroup;
         }
     },
-    created: function created() {
-        // Echo.join('chatroom')
-        //     .here((users) => {
-        //         store.commit('assignActiveUsers', users)
-        //     }).
-        //     joining((user) => {
-        //         store.commit('addToActiveUsers', user)
-        //         console.log(user.name + " join the chat.")
-        //     }).
-        //     leaving((user) => {
-        //         store.commit('removeFromActiveUsers', user)
-        //     })
-        //     .listen('MessagePosted', (e) => {
-        //         store.commit('updateMessages', e.message)
-        //     })
-    },
+    created: function created() {},
     mounted: function mounted() {
         axios.get('/init/' + groupId).then(function (response) {
             store.commit('assignMessages', response.data.messages);

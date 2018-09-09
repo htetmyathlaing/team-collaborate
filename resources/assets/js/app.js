@@ -30,7 +30,7 @@ Vue.component('chat-composer', require('./components/ChatComposer.vue'))
 Vue.component('left-colum', require('./components/LeftColum.vue'))
 // Vue.component('right-colum', require('./components/RightColum.vue'))
 Vue.component('chatroom-details', require('./components/ChatRoomDetails.vue'))
-Vue.component('announcement', require('./components/Announcement.vue'))
+// Vue.component('announcement', require('./components/Announcement.vue'))
 Vue.component('nav-bar', require('./components/NavBar.vue'))
 Vue.component('notifications', require('./components/Notifications.vue'))
 Vue.component('create-channel-modal', require('./components/CreateChannelModal.vue'))
@@ -41,6 +41,7 @@ Vue.component('voice-call-modal', require('./components/VoiceCallModal.vue'))
 Vue.component('video-call-modal', require('./components/VideoCallModal.vue'))
 
 import Chat from './components/Chat.vue'
+import Announcement from './components/Announcement.vue'
 import ResourceCenter from './components/ResourceCenter.vue'
 import Notes from './components/Notes.vue'
 import Videos from './components/Videos.vue'
@@ -49,6 +50,7 @@ import Extras from './components/Extras.vue'
 
 const routes = [
     {path: '/', component: Chat },
+    {path: '/announcement', component: Announcement },
     {
         path: '/resource-center', 
         component: ResourceCenter,
@@ -70,8 +72,6 @@ const store = new Vuex.Store({
     messages:'',
     activeUsers:[],
     currentUser: '',
-    // users:[],
-    // channels: [],
     currentGroup: '',
     currentChannel: '',
     channelDescription: '',
@@ -102,13 +102,11 @@ const store = new Vuex.Store({
     },
     updateCurrentUser (state, currentUser) {
       state.currentUser = currentUser
+      Echo.private('App.User.' + currentUser.id)
+            .notification((notification) => {
+                console.log(notification);
+            });
     },
-    // updateUsers (state, users) {
-    //   state.users = users
-    // },
-    // updateChannels (state, channels) {
-    //   state.channels = channels
-    // },
     updateCurrentGroup (state, currentGroup) {
       state.currentGroup = currentGroup
       Echo.join('chatroom.'+store.state.currentGroup.id)
@@ -171,20 +169,6 @@ const app = new Vue({
         }
     },
     created(){
-        // Echo.join('chatroom')
-        //     .here((users) => {
-        //         store.commit('assignActiveUsers', users)
-        //     }).
-        //     joining((user) => {
-        //         store.commit('addToActiveUsers', user)
-        //         console.log(user.name + " join the chat.")
-        //     }).
-        //     leaving((user) => {
-        //         store.commit('removeFromActiveUsers', user)
-        //     })
-        //     .listen('MessagePosted', (e) => {
-        //         store.commit('updateMessages', e.message)
-        //     })
     },
     mounted(){
         axios.get('/init/' + groupId).then(response => {

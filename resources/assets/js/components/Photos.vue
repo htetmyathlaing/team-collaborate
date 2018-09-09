@@ -11,7 +11,7 @@
         </button>
 
     	 <!-- Upload File -->
-        <div v-show="choosing" class="form-group row">
+        <div v-show="choosing" class="form-group row mm-text">
 			<label for="inputFile" class="col-sm-2 col-form-label text-right">ဖိုင်ရွေးရန်</label>
 			<div class="col-sm-3">
 				<input type="file" 

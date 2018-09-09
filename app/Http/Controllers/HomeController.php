@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Group;
+
 
 class HomeController extends Controller
 {
@@ -24,7 +26,11 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $groups =  User::with('involvedGroups')->find(Auth::id())->involvedGroups;
+        $involvedGroups =  User::with('involvedGroups')->find(Auth::id())->involvedGroups;
+        $groups = [];
+        foreach ($involvedGroups as $group) {
+            array_push($groups, Group::with('users')->find($group->id));
+        }
         return view('home', compact('groups'));
     }
     

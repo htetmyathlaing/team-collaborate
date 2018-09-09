@@ -3,7 +3,7 @@
 	  	<div class="modal-dialog" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
-	        		<h5 class="modal-title mx-auto">ချန်နယ်အသစ်တစ်ခု ဖန်တီးမည်</h5>
+	        		<h5 class="modal-title mx-auto">ခေါင်းစဉ်ခွဲအသစ်တစ်ခု ဖန်တီးမည်</h5>
 	        	<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          		<span aria-hidden="true">&times;</span>
 	        	</button> -->
@@ -12,18 +12,18 @@
         			<div class="form-group row">
 						<label for="inputName" class="col-sm-3 col-form-label">အမည်</label>
 					    <div class="col-sm-9">
-					      	<input type="text" class="form-control" id="inputName" placeholder="ချန်နယ်အမည် ထည့်သွင်းပါ။" v-model="name" @keydown.enter="create" required autofocus>
+					      	<input type="text" class="form-control" id="inputName" placeholder="ခေါင်းစဉ်ခွဲအမည် ထည့်သွင်းပါ။" v-model="name" @keydown.enter="create" required autofocus>
 					      	<span class="invalid-feedback" role="alert">
                                 <strong>အမည်ကို ရိုက်ထည့်ပေးရမည်။</strong>
                             </span>
 					    </div>
 					</div>
 					<div class="form-group row">
-					    <label for="inputDescription" class="col-sm-3 col-form-label">ဖော်ပြချက်</label>
+					    <label for="inputDescription" class="col-sm-3 col-form-label">အချက်အလက်</label>
 					    <div class="col-sm-9">
-					      	<input type="text" class="form-control" id="inputDescription" placeholder="ဤချန်နယ်နှင့် ပတ်သက်သော အကြောင်းအရာဖော်ပြချက်ထည့်ပါ။"v-model="description" @keydown.enter="create" >
+					      	<input type="text" class="form-control" id="inputDescription" placeholder="ဤခေါင်းစဉ်ခွဲနှင့် ပတ်သက်သော အကြောင်းအရာဖော်ပြချက်ထည့်ပါ။"v-model="description" @keydown.enter="create" >
 					      	<span class="invalid-feedback" role="alert">
-                                <strong>ချန်နယ်နှင့်ပတ်သက်သော​ဖော်ပြချက် ထည့်ပေးရမည်။</strong>
+                                <strong>ခေါင်းစဉ်ခွဲနှင့်ပတ်သက်သော​ဖော်ပြချက် ထည့်ပေးရမည်။</strong>
                             </span>
 					    </div>
 					</div>
@@ -72,8 +72,8 @@
         		}
 
         		if(this.name  && this.description){
-        			$('#inputName #inputDescription').removeClass('is-invalid')
-        			$('#inputName #inputDescription').addClass('is-valid')
+        			$('#inputName,#inputDescription').removeClass('is-invalid')
+        			$('#inputName,#inputDescription').addClass('is-valid')
         			this.isChannelCreating = true
 
         			axios.post('/channels', {
@@ -85,7 +85,7 @@
                   		this.isChannelCreating = false
                   		this.name = ''
         				this.description = ''
-        				$('#inputName #inputDescription').removeClass('is-valid')
+        				$('#inputName,#inputDescription').removeClass('is-valid')
                   		$('#createChannelModal').modal("hide")
 
                     	this.$store.commit('updateCurrentChannel', 'channel'+this.$store.state.currentGroup.channels[(this.$store.state.currentGroup.channels).length-1].id)
@@ -117,7 +117,7 @@
     }
 
   	.loader-text:after {
-	    content: "ချန်နယ်ကို ဖန်တီးနေသည်";
+	    content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည်";
 	    font-weight: bold;
 	    font-style: italic;
 	    color: #28a745;
@@ -128,37 +128,37 @@
 
 	 @keyframes loading-text {
 	    0% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည်";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည်";
 	    }
 	    10% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် .";
 	    }
 	    20% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . .";
 	    }
 	    30% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . . . ";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . . . ";
 	    }
 	    40% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . . . .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . . . .";
 	    }
 	    50% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . . . . .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . . . . .";
 	    }
 	    60% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . . . . . .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . . . . . .";
 	    }
 	    70% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . . . . . . .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . . . . . . .";
 	    }
 	    80% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . . . . . . . .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . . . . . . . .";
 	    }
 	    90% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . . . . . . . . .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . . . . . . . . .";
 	    }
 	    100% {
-	      content: "ချန်နယ်ကို ဖန်တီးနေသည် . . . . . . . . . .";
+	      content: "ခေါင်းစဉ်ခွဲကို ဖန်တီးနေသည် . . . . . . . . . .";
 	    }
 	}
 </style>

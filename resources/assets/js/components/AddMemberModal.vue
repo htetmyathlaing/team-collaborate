@@ -63,6 +63,7 @@
 		                            this.isMemberAdding = false
 		                        }) 
 	                  		$('#addMemberModal').modal("hide")
+                            this.email = ''
 		                	$('.list-item').attr("class","list-item")
                        	}
                     }) 
