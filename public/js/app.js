@@ -63035,7 +63035,11 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
             }).leaving(function (user) {
                 store.commit('removeFromActiveUsers', user);
             }).listen('MessagePosted', function (e) {
-                if (store.state.currentChannel == 'channel' + e.message.channel_id || store.state.currentChannel == e.message.user_id || store.state.currentUser.id == e.message.user_id) {
+                if (store.state.currentUser.id == e.message.user_id || //add the message you type
+                store.state.currentChannel == 'channel' + e.message.channel_id || //add the message in current channel
+                store.state.currentChannel == 'user' + e.message.user_id && // add the message
+                store.state.currentUser.id == e.message.to_user_id) {
+                    // to the private channel
                     store.commit('toggleIsMessageSending');
                     store.commit('updateMessages', e.message);
                     store.commit('toggleIsMessageSending');
