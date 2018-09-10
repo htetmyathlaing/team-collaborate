@@ -1,7 +1,7 @@
 <template>
     <div class="scroll-view" auto-scroll>
         <transition-group name="list">
-            <chat-message v-for="message in messages" :key="message.id" :message="message"  class="list-complete-item"></chat-message>
+            <chat-message v-for="message in messages" :key="message.id" :message="message"></chat-message>
         </transition-group>
         <div v-show="isMessageSending" class='container'>
             <div class='loader'>

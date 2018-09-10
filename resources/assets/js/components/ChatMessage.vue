@@ -4,7 +4,7 @@
     		<div class="m-2">
     			<img src="../../../../public/img/img_avatar1.png" alt="Avartar">
     		</div>
-    		<div class="col-8">
+    		<div class="col-10">
     			<span class="text-primary">{{ message.user.name }}</span>
     			<span class="text-muted">{{ message.created_at }}</span>
     			<br/>

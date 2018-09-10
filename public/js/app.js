@@ -44767,7 +44767,7 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "col-8" }, [
+      _c("div", { staticClass: "col-10" }, [
         _c("span", { staticClass: "text-primary" }, [
           _vm._v(_vm._s(_vm.message.user.name))
         ]),
@@ -46148,7 +46148,6 @@ var render = function() {
         _vm._l(_vm.messages, function(message) {
           return _c("chat-message", {
             key: message.id,
-            staticClass: "list-complete-item",
             attrs: { message: message }
           })
         })
@@ -63020,7 +63019,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
                         showMethod: 'slideDown',
                         hideMethod: 'slideUp',
                         positionClass: 'toast-bottom-right',
-                        timeOut: 3000
+                        timeOut: 5000
                     });
                 }
             });
