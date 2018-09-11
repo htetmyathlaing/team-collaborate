@@ -27,7 +27,7 @@ Route::resource('/channels', 'ChannelController');
 
 Route::delete('/channel/{group_id}/{id}', 'ChannelController@destroy');
 
-Route::get('/getmessages/{channel}', 'MessageController@getMessages');
+Route::get('/getmessages/{group_id}/{channel_id}', 'MessageController@getMessages');
 
 Route::get('/init/{group_id}', 'GroupController@init');
 

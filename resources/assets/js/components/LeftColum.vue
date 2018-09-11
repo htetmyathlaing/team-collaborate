@@ -119,7 +119,7 @@
                         else
                             this.$store.commit('updateChannelDescription', "This is private chat.")
 
-                        axios.get('/getmessages/'+event.target.id).then(response => {
+                        axios.get('/getmessages/'+this.$store.state.currentGroup.id+'/'+event.target.id).then(response => {
                             this.$store.commit('assignMessages', response.data.messages)
                         })
                     }

@@ -120,17 +120,18 @@ class MessageController extends Controller
      * @param  int $channel
      * @return \Illuminate\Http\Response
      */
-    public function getMessages($channel='')
+    public function getMessages($group_id='',$channel_id='')
     {
-        $channel_id = (int) filter_var($channel, FILTER_SANITIZE_NUMBER_INT);
+        $channel_id = (int) filter_var($channel_id, FILTER_SANITIZE_NUMBER_INT);
     
-        if($channel[0]=='c')
+        if($channel_id[0]=='c')
             return ['messages' => Message::where([
                         ['type', '=', 'channel'],
                         ['channel_id', '=', $channel_id]
                 ])->with('user')->get()];
         else
             return ['messages' => Message::where('type','direct-message')
+                                    ->where('group_id', $group_id)
                                     ->whereIn('user_id', [Auth::id(), $channel_id])
                                     ->whereIn('to_user_id', [Auth::id(), $channel_id])
                                     ->with('user')->get()];

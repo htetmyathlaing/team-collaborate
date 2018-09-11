@@ -163,6 +163,7 @@
 	                   content: this.content,
 	               	}).then(response => {
 	                	this.content = ''
+	                	this.title = ''
 	                	this.viewing = false
         				this.writing = false
         				this.titling = false

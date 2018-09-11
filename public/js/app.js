@@ -2771,7 +2771,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (event.target.id) {
                 if (event.target.id[0] === 'c') this.$store.commit('updateChannelDescription', this.$store.state.currentGroup.channels[$(event.target).data('index')].description);else this.$store.commit('updateChannelDescription', "This is private chat.");
 
-                axios.get('/getmessages/' + event.target.id).then(function (response) {
+                axios.get('/getmessages/' + this.$store.state.currentGroup.id + '/' + event.target.id).then(function (response) {
                     _this.$store.commit('assignMessages', response.data.messages);
                 });
             }
@@ -3103,6 +3103,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                    content: this.content
                             }).then(function (response) {
                                    _this2.content = '';
+                                   _this2.title = '';
                                    _this2.viewing = false;
                                    _this2.writing = false;
                                    _this2.titling = false;
