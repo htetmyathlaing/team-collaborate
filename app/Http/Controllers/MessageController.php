@@ -67,6 +67,7 @@ class MessageController extends Controller
         }
         $message->save();
         broadcast(new MessagePosted($message->id));
+        return "Message Sent";
     }
 
     /**

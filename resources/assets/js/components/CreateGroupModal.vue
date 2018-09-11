@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade mt-5" id="createGroupModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade mt-5 mm-text" id="createGroupModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 	  	<div class="modal-dialog" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
@@ -27,7 +27,7 @@
                             </span>
 					    </div>
 					</div>
-					<div v-show="isGroupCreating" class='container'>
+					<div v-show="isGroupCreating" class='container  mm-text'>
 			            <div class='loader'>
 			                <div class='loader-text'></div>
 			            </div>

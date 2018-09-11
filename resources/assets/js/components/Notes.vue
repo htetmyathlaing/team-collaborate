@@ -1,5 +1,5 @@
 <template>
-    <div class="container mm-text">
+    <div class="container">
     	<!-- <a v-show="!viewing"
     		class="btn btn-success m-3"
     		data-toggle="modal"
@@ -32,7 +32,7 @@
     	</div>
 
     	 <!-- Create Title -->
-        <div v-show="titling && !viewing && !editing &&!writing" class="form-group row">
+        <div v-show="titling && !viewing && !editing &&!writing" class="form-group row  mm-text">
 			<label for="inputTitle" class="col-sm-2 col-form-label text-right">ခေါင်းစဉ်</label>
 			<div class="col-sm-5">
 				<input type="text" 
@@ -58,9 +58,9 @@
 
     	<!-- List Notes -->
 	    <ul v-show="!titling && !writing && !viewing && !editing" 
-	    	class="list-group scroll-view" 
+	    	class="list-group scroll-view  mm-text" 
 	    	@mouseleave="mouseOutOfLists">
-	    	<p v-if="!notes.length">မှတ်စုများ မရှိသေးပါ။ မှတ်စုများ စတင်ရေးသားနိုင်ပါသည်။</p>
+	    	<p v-if="!notes.length" class="mm-text">မှတ်စုများ မရှိသေးပါ။ မှတ်စုများ စတင်ရေးသားနိုင်ပါသည်။</p>
 	    	<transition-group name="list">
 				<li v-for="(item,index) in notes" 
 					:key="index"
@@ -117,7 +117,7 @@
 		      		<div class="modal-body">
 						ဤမှတ်စုကို ဖျက်ပါလိမ့်မည်။
 						
-				        <div v-show="deleting" class='deleting-text'></div>
+				        <div v-show="deleting" class='deleting-text  mm-text'></div>
 		      		</div>
 		      		<div class="modal-footer">
 		        		<button type="button" class="btn btn-secondary" data-dismiss="modal" :disabled="deleting">မလုပ်တောပါ</button>

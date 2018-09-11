@@ -131,15 +131,15 @@ class ChannelController extends Controller
                 return 'false';
             }
             else {
-                Channel::destroy($id);
-                Message::where('channel_id', $id)->delete();
-
                 $users = Group::with('users')->find($group_id)->users;
                 $notification = [
                     'user' => Auth::user()->name,
                     'group'  => $group_id,
                     'action' => "deleted the ".Channel::find($id)->name." channel",
                 ];
+                Channel::destroy($id);
+                Message::where('channel_id', $id)->delete();
+                
                 Notification::send($users, new AppNotification($notification));
             }
         }

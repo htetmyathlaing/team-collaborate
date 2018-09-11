@@ -31,7 +31,7 @@
                             <a role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="fas fa-xs fa-ellipsis-v"></span>
                             </a>
-                                <div class="dropdown-menu dropdown-menu-right mt-3">
+                            <div class="dropdown-menu dropdown-menu-right mt-3 mm-text">
                                 <h6 class="dropdown-header">ချန်နယ်ကိုဖျက်မည်</h6>
                                 <div class="dropdown-item border-top text-danger"
                                     data-toggle="modal" 

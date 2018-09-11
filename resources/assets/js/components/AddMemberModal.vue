@@ -3,17 +3,17 @@
 	  	<div class="modal-dialog" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
-	        		<h5 class="modal-title mx-auto">အဖွဲ့ဝင်အသစ် ပေါင်းထည့်ရန်</h5>
+	        		<h5 class="modal-title mx-auto mm-text">အဖွဲ့ဝင်အသစ် ပေါင်းထည့်ရန်</h5>
 	      		</div>
 	      		<div class="modal-body">
-	        		<input type="text" class="form-control" id="inputEmail" placeholder="Email ရိုက်ထည့်ပါ" v-model="email" @keydown.enter="add" required autofocus>
-	        		<span class="invalid-feedback" role="alert">
+	        		<input type="text" class="form-control mm-text" id="inputEmail" placeholder="Email ရိုက်ထည့်ပါ" v-model="email" @keydown.enter="add" required autofocus>
+	        		<span class="invalid-feedback mm-text" role="alert">
                 		<strong>{{ feedback }}</strong>
             		</span>
 	      		</div>
 	      		<div class="modal-footer">
-	        		<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="cancel">မလုပ်တော့ပါ</button>
-	        		<button type="button" class="btn btn-primary" @click="add">ပေါင်းထည့်မည်</button>
+	        		<button type="button" class="btn btn-secondary mm-text" data-dismiss="modal" @click="cancel">မလုပ်တော့ပါ</button>
+	        		<button type="button" class="btn btn-primary mm-text" @click="add">ပေါင်းထည့်မည်</button>
 	      		</div>
 	    	</div>
 	  	</div>
@@ -44,11 +44,11 @@
                     }).then(response => {
                        	if(response.data == 'not found'){
                        		$('#inputEmail').toggleClass('is-invalid')
-                       		this.feedback = 'သင်ထည့်သွင်းသော Email ြဖင့် အသုံးပြုသူကို ရှာမတွေ့ပါ။'
+                       		this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူကို ရှာမတွေ့ပါ။'
                        	}
                         else if(response.data == 'exit'){
                             $('#inputEmail').toggleClass('is-invalid')
-                            this.feedback = 'သင်ထည့်သွင်းသော Email ြဖင့် အသုံးပြုသူသည် အဖွဲ့တွင် ပါဝင်ပြီးဖြစ်သည်။'
+                            this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူသည် အဖွဲ့တွင် ပါဝင်ပြီးဖြစ်သည်။'
                         }
                        	else{
 	                  		$('#inputEmail').removeClass('is-valid')

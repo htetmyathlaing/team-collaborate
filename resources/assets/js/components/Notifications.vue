@@ -1,5 +1,5 @@
 <template>
-    <li class="nav-item dropdown  mr-3">
+    <li class="nav-item dropdown mr-3">
         <a class="nav-link" 
             role="button" 
             data-toggle="dropdown"

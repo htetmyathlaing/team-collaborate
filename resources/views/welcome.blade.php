@@ -67,7 +67,7 @@
             <div class="col-md-6 col-sm-12">
                 <h3 class="mt-5 mx-auto mm-text-bold">အဖွဲ့လိုက်ပူးပေါင်းဆောင်ရွက်ရန်အတွက် ပြီးပြည့်စုံသောနေရာတစ်ခု</h3>
                 <div class="mx-auto mt-3">
-                    <p><strong>TeamCollaborate</strong> သည် အဖွဲ့လိုက်ပူးပေါင်းဆောင်ရွက်ရန်အတွက် လိုအပ်သော 
+                    <p><strong>TeamCollaborate</strong> သည် အဖွဲ့လိုက်ပူးပေါင်းဆောင်ရွက်ရန်အတွက်
                     <br>
                     <ul>
                         <li>လိုအပ်သောသတင်းအချက်အလက်များကိုမျှဝေနိုင်ခြင်း</li>

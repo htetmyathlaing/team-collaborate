@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade mt-5" id="voiceCallModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade mt-5  mm-text" id="voiceCallModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 	  	<div class="modal-dialog modal-lg" role="document">
 	    	<div class="modal-content bg-dark">
 	      		<div class="modal-body text-center py-5">

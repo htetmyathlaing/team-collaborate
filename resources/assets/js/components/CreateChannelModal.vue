@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade mt-5" id="createChannelModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade mt-5 mm-text" id="createChannelModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 	  	<div class="modal-dialog" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
@@ -13,7 +13,7 @@
 						<label for="inputName" class="col-sm-3 col-form-label">အမည်</label>
 					    <div class="col-sm-9">
 					      	<input type="text" class="form-control" id="inputName" placeholder="ခေါင်းစဉ်ခွဲအမည် ထည့်သွင်းပါ။" v-model="name" @keydown.enter="create" required autofocus>
-					      	<span class="invalid-feedback" role="alert">
+					      	<span class="invalid-feedback mm-text" role="alert">
                                 <strong>အမည်ကို ရိုက်ထည့်ပေးရမည်။</strong>
                             </span>
 					    </div>
@@ -22,14 +22,14 @@
 					    <label for="inputDescription" class="col-sm-3 col-form-label">အချက်အလက်</label>
 					    <div class="col-sm-9">
 					      	<input type="text" class="form-control" id="inputDescription" placeholder="ဤခေါင်းစဉ်ခွဲနှင့် ပတ်သက်သော အကြောင်းအရာဖော်ပြချက်ထည့်ပါ။"v-model="description" @keydown.enter="create" >
-					      	<span class="invalid-feedback" role="alert">
+					      	<span class="invalid-feedback mm-text" role="alert">
                                 <strong>ခေါင်းစဉ်ခွဲနှင့်ပတ်သက်သော​ဖော်ပြချက် ထည့်ပေးရမည်။</strong>
                             </span>
 					    </div>
 					</div>
 					<div v-show="isChannelCreating" class='container'>
 			            <div class='loader'>
-			                <div class='loader-text'></div>
+			                <div class='loader-text mm-text'></div>
 			            </div>
 			        </div>
 	      		</div>
@@ -94,7 +94,7 @@
 
                     	this.$store.commit('updateChannelDescription', 
                                 this.$store.state.currentGroup.channels[(this.$store.state.currentGroup.channels).length-1].description)
-
+                    	
                     	this.$store.commit('assignMessages', [])
 
 		                $('.list-item').attr("class","list-item")

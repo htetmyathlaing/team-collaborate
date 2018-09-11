@@ -2036,10 +2036,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).then(function (response) {
                     if (response.data == 'not found') {
                         $('#inputEmail').toggleClass('is-invalid');
-                        _this.feedback = 'သင်ထည့်သွင်းသော Email ြဖင့် အသုံးပြုသူကို ရှာမတွေ့ပါ။';
+                        _this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူကို ရှာမတွေ့ပါ။';
                     } else if (response.data == 'exit') {
                         $('#inputEmail').toggleClass('is-invalid');
-                        _this.feedback = 'သင်ထည့်သွင်းသော Email ြဖင့် အသုံးပြုသူသည် အဖွဲ့တွင် ပါဝင်ပြီးဖြစ်သည်။';
+                        _this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူသည် အဖွဲ့တွင် ပါဝင်ပြီးဖြစ်သည်။';
                     } else {
                         $('#inputEmail').removeClass('is-valid');
                         _this.$store.commit('addUser', response.data);
@@ -2619,10 +2619,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 _this.$store.commit('updateChannelDescription', _this.$store.state.currentGroup.channels[0].description);
 
-                axios.get('/getmessages/' + _this.$store.state.currentChannel).then(function (response) {
+                axios.get('/getmessages/' + _this.$store.state.currentGroup.id + '/' + _this.$store.state.currentChannel).then(function (response) {
                     _this.$store.commit('assignMessages', response.data.messages);
-                    _this.isChannelDeleting = false;
                 });
+                _this.isChannelDeleting = false;
                 $('#deleteChannelModal').modal("hide");
             });
         }
@@ -44554,7 +44554,7 @@ var render = function() {
                       expression: "deleting"
                     }
                   ],
-                  staticClass: "deleting-text"
+                  staticClass: "deleting-text  mm-text"
                 })
               ]),
               _vm._v(" "),
@@ -44662,7 +44662,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "modal fade mt-5",
+      staticClass: "modal fade mt-5 mm-text",
       attrs: {
         id: "deleteChannelModal",
         tabindex: "-1",
@@ -44708,7 +44708,7 @@ var render = function() {
                   disabled: _vm.isChannelDeleting
                 }
               },
-              [_vm._v("မလုပ်တောပါ")]
+              [_vm._v("မလုပ်တော့ပါ")]
             ),
             _vm._v(" "),
             _c(
@@ -44742,7 +44742,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "loader" }, [
-      _c("div", { staticClass: "loader-text" })
+      _c("div", { staticClass: "loader-text  mm-text" })
     ])
   }
 ]
@@ -44827,7 +44827,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "modal fade mt-5",
+        staticClass: "modal fade mt-5  mm-text",
         attrs: {
           id: "videoCallModal",
           tabindex: "-1",
@@ -45431,23 +45431,27 @@ var staticRenderFns = [
         [_c("span", { staticClass: "fas fa-xs fa-ellipsis-v" })]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "dropdown-menu dropdown-menu-right mt-3" }, [
-        _c("h6", { staticClass: "dropdown-header" }, [
-          _vm._v("ချန်နယ်ကိုဖျက်မည်")
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "dropdown-item border-top text-danger",
-            attrs: {
-              "data-toggle": "modal",
-              "data-target": "#deleteChannelModal"
-            }
-          },
-          [_c("p", [_vm._v("ဖျက်မည် ")])]
-        )
-      ])
+      _c(
+        "div",
+        { staticClass: "dropdown-menu dropdown-menu-right mt-3 mm-text" },
+        [
+          _c("h6", { staticClass: "dropdown-header" }, [
+            _vm._v("ချန်နယ်ကိုဖျက်မည်")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown-item border-top text-danger",
+              attrs: {
+                "data-toggle": "modal",
+                "data-target": "#deleteChannelModal"
+              }
+            },
+            [_c("p", [_vm._v("ဖျက်မည် ")])]
+          )
+        ]
+      )
     ])
   }
 ]
@@ -45542,7 +45546,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container  mm-text" }, [
     _c(
       "button",
       {
@@ -45612,7 +45616,7 @@ var render = function() {
                 expression: "uploading"
               }
             ],
-            staticClass: "uploading-text"
+            staticClass: "uploading-text  mm-text"
           })
         ]),
         _vm._v(" "),
@@ -45652,7 +45656,7 @@ var render = function() {
       },
       [
         !_vm.files.length
-          ? _c("p", [
+          ? _c("p", { staticClass: "mm-text" }, [
               _vm._v(
                 "မည်သည့်ဖိုင်မျှတင်ထားခြင်းမရှိသေးပါ။ ဖိုင်အသစ်များ တင်နိုင်ပါသည်။"
               )
@@ -45782,7 +45786,7 @@ var render = function() {
                       expression: "deleting"
                     }
                   ],
-                  staticClass: "deleting-text"
+                  staticClass: "deleting-text  mm-text"
                 })
               ]),
               _vm._v(" "),
@@ -45878,7 +45882,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", { staticClass: "nav-item dropdown  mr-3" }, [
+  return _c("li", { staticClass: "nav-item dropdown mr-3" }, [
     _c(
       "a",
       {
@@ -45982,7 +45986,7 @@ var render = function() {
                   expression: "email"
                 }
               ],
-              staticClass: "form-control",
+              staticClass: "form-control mm-text",
               attrs: {
                 type: "text",
                 id: "inputEmail",
@@ -46012,7 +46016,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "span",
-              { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+              {
+                staticClass: "invalid-feedback mm-text",
+                attrs: { role: "alert" }
+              },
               [_c("strong", [_vm._v(_vm._s(_vm.feedback))])]
             )
           ]),
@@ -46021,7 +46028,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-secondary",
+                staticClass: "btn btn-secondary mm-text",
                 attrs: { type: "button", "data-dismiss": "modal" },
                 on: { click: _vm.cancel }
               },
@@ -46031,7 +46038,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn-primary mm-text",
                 attrs: { type: "button" },
                 on: { click: _vm.add }
               },
@@ -46049,7 +46056,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title mx-auto" }, [
+      _c("h5", { staticClass: "modal-title mx-auto mm-text" }, [
         _vm._v("အဖွဲ့ဝင်အသစ် ပေါင်းထည့်ရန်")
       ])
     ])
@@ -46211,7 +46218,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "modal fade mt-5",
+        staticClass: "modal fade mt-5  mm-text",
         attrs: {
           id: "voiceCallModal",
           tabindex: "-1",
@@ -46275,7 +46282,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container mm-text" }, [
+  return _c("div", { staticClass: "container" }, [
     _c(
       "button",
       {
@@ -46383,7 +46390,7 @@ var render = function() {
             expression: "titling && !viewing && !editing &&!writing"
           }
         ],
-        staticClass: "form-group row"
+        staticClass: "form-group row  mm-text"
       },
       [
         _c(
@@ -46471,12 +46478,12 @@ var render = function() {
             expression: "!titling && !writing && !viewing && !editing"
           }
         ],
-        staticClass: "list-group scroll-view",
+        staticClass: "list-group scroll-view  mm-text",
         on: { mouseleave: _vm.mouseOutOfLists }
       },
       [
         !_vm.notes.length
-          ? _c("p", [
+          ? _c("p", { staticClass: "mm-text" }, [
               _vm._v("မှတ်စုများ မရှိသေးပါ။ မှတ်စုများ စတင်ရေးသားနိုင်ပါသည်။")
             ])
           : _vm._e(),
@@ -46632,7 +46639,7 @@ var render = function() {
                       expression: "deleting"
                     }
                   ],
-                  staticClass: "deleting-text"
+                  staticClass: "deleting-text  mm-text"
                 })
               ]),
               _vm._v(" "),
@@ -46710,7 +46717,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "modal fade mt-5",
+      staticClass: "modal fade mt-5 mm-text",
       attrs: {
         id: "createChannelModal",
         tabindex: "-1",
@@ -46892,7 +46899,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+      { staticClass: "invalid-feedback mm-text", attrs: { role: "alert" } },
       [_c("strong", [_vm._v("အမည်ကို ရိုက်ထည့်ပေးရမည်။")])]
     )
   },
@@ -46902,7 +46909,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+      { staticClass: "invalid-feedback mm-text", attrs: { role: "alert" } },
       [
         _c("strong", [
           _vm._v("ခေါင်းစဉ်ခွဲနှင့်ပတ်သက်သော​ဖော်ပြချက် ထည့်ပေးရမည်။")
@@ -46915,7 +46922,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "loader" }, [
-      _c("div", { staticClass: "loader-text" })
+      _c("div", { staticClass: "loader-text mm-text" })
     ])
   }
 ]
@@ -46940,7 +46947,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "modal fade mt-5",
+      staticClass: "modal fade mt-5 mm-text",
       attrs: {
         id: "createGroupModal",
         tabindex: "-1",
@@ -47069,7 +47076,7 @@ var render = function() {
                     expression: "isGroupCreating"
                   }
                 ],
-                staticClass: "container"
+                staticClass: "container  mm-text"
               },
               [_vm._m(3)]
             )
@@ -47163,7 +47170,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container mm-text" }, [
     _c(
       "button",
       {
@@ -47233,7 +47240,7 @@ var render = function() {
                 expression: "uploading"
               }
             ],
-            staticClass: "uploading-text"
+            staticClass: "uploading-text  mm-text"
           })
         ]),
         _vm._v(" "),
@@ -47268,12 +47275,12 @@ var render = function() {
             expression: "!viewing"
           }
         ],
-        staticClass: "list-group scroll-view",
+        staticClass: "list-group scroll-view  mm-text",
         on: { mouseleave: _vm.mouseOutOfLists }
       },
       [
         !_vm.files.length
-          ? _c("p", [
+          ? _c("p", { staticClass: "mm-text" }, [
               _vm._v(
                 "မည်သည့်ဖိုင်မျှတင်ထားခြင်းမရှိသေးပါ။ ဖိုင်အသစ်များ တင်နိုင်ပါသည်။"
               )
@@ -47404,7 +47411,7 @@ var render = function() {
                       expression: "deleting"
                     }
                   ],
-                  staticClass: "deleting-text"
+                  staticClass: "deleting-text  mm-text"
                 })
               ]),
               _vm._v(" "),

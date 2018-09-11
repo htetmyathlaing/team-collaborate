@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade mt-5" id="deleteChannelModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade mt-5 mm-text" id="deleteChannelModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 	  	<div class="modal-dialog" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
@@ -9,12 +9,12 @@
 					ယခုချန်နယ်နှင့် သက်ဆိုင်သော မက်ဆေ့ချ်များအားလုံးကို ဖျက်ပါလိမ့်မည့်။
 					<div v-show="isChannelDeleting" class='container'>
 			            <div class='loader'>
-			                <div class='loader-text'></div>
+			                <div class='loader-text  mm-text'></div>
 			            </div>
 			        </div>
 	      		</div>
 	      		<div class="modal-footer">
-	        		<button type="button" class="btn btn-secondary" data-dismiss="modal" :disabled="isChannelDeleting">မလုပ်တောပါ</button>
+	        		<button type="button" class="btn btn-secondary" data-dismiss="modal" :disabled="isChannelDeleting">မလုပ်တော့ပါ</button>
 	        		<button type="button" class="btn btn-danger" @click="deleteChannel" :disabled="isChannelDeleting">ဖျက်မည်</button>
 	      		</div>
 	    	</div>
@@ -45,10 +45,10 @@
                     this.$store.commit('updateChannelDescription', 
                         this.$store.state.currentGroup.channels[0].description)
 
-                    axios.get('/getmessages/'+this.$store.state.currentChannel).then(response => {
+                    axios.get('/getmessages/'+this.$store.state.currentGroup.id+'/'+this.$store.state.currentChannel).then(response => {
                             this.$store.commit('assignMessages', response.data.messages)
-                            this.isChannelDeleting = false
                         }) 
+                    this.isChannelDeleting = false
                     $('#deleteChannelModal').modal("hide")    
                 }) 
             }

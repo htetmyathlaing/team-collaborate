@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mm-text">
         <button v-show="!viewing"
         	type="button"
             class="btn btn-success btn-circle m-3"
@@ -23,7 +23,7 @@
 				<span class="invalid-feedback" role="alert">
                     <strong>ဖိုင်ဆိုဒ် 100MB ထက်ကျော်လွန်၍ မရပါ။ </strong>
                 </span> 
-        		<span v-show="uploading" class='uploading-text'></span>
+        		<span v-show="uploading" class='uploading-text  mm-text'></span>
 			</div>
 			<a class="btn btn-success text-white col-sm-2 align-middle"
             	@click="upload">
@@ -37,9 +37,9 @@
 
 		<!-- List Files -->
 	    <ul v-show="!viewing" 
-	    	class="list-group scroll-view" 
+	    	class="list-group scroll-view  mm-text" 
 	    	@mouseleave="mouseOutOfLists">
-	    	<p v-if="!files.length">မည်သည့်ဖိုင်မျှတင်ထားခြင်းမရှိသေးပါ။ ဖိုင်အသစ်များ တင်နိုင်ပါသည်။</p>
+	    	<p v-if="!files.length" class="mm-text">မည်သည့်ဖိုင်မျှတင်ထားခြင်းမရှိသေးပါ။ ဖိုင်အသစ်များ တင်နိုင်ပါသည်။</p>
 	    	<transition-group name="list">
 				<li v-for="(item,index) in files" 
 					:key="index"
@@ -84,7 +84,7 @@
 		      		<div class="modal-body">
 						ဤမှတ်စုကို ဖျက်ပါလိမ့်မည်။
 						
-				        <div v-show="deleting" class='deleting-text'></div>
+				        <div v-show="deleting" class='deleting-text  mm-text'></div>
 		      		</div>
 		      		<div class="modal-footer">
 		        		<button type="button" class="btn btn-secondary" data-dismiss="modal" :disabled="deleting">မလုပ်တောပါ</button>

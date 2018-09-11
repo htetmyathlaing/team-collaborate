@@ -64,7 +64,7 @@
                     <div class="modal-body">
                         ဤအဖွဲ့ကို ဖျက်ပါလိမ့်မည်။
                             
-                        <div v-show="deleting" class='deleting-text'></div>
+                        <div v-show="deleting" class='deleting-text  mm-text'></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" :disabled="deleting">
