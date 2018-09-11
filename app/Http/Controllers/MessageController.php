@@ -122,19 +122,22 @@ class MessageController extends Controller
      */
     public function getMessages($group_id='',$channel_id='')
     {
-        $channel_id = (int) filter_var($channel_id, FILTER_SANITIZE_NUMBER_INT);
-    
-        if($channel_id[0]=='c')
+        // return Message::where('type','channel')->where('channel_id',94)->with('user')->get();
+        if($channel_id[0]=='c'){
+            $channel_id = (int) filter_var($channel_id, FILTER_SANITIZE_NUMBER_INT);
             return ['messages' => Message::where([
                         ['type', '=', 'channel'],
                         ['channel_id', '=', $channel_id]
                 ])->with('user')->get()];
-        else
+        }
+        else{    
+            $channel_id = (int) filter_var($channel_id, FILTER_SANITIZE_NUMBER_INT);
             return ['messages' => Message::where('type','direct-message')
                                     ->where('group_id', $group_id)
                                     ->whereIn('user_id', [Auth::id(), $channel_id])
                                     ->whereIn('to_user_id', [Auth::id(), $channel_id])
                                     ->with('user')->get()];
+        }
 
     }
 }
