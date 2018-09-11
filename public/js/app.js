@@ -2455,18 +2455,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     description: this.description,
                     group_id: this.$store.state.currentGroup.id
                 }).then(function (response) {
-                    _this.$store.commit('updateCurrentGroup', response.data);
+                    _this.$store.commit('addChannel', response.data);
                     _this.isChannelCreating = false;
                     _this.name = '';
                     _this.description = '';
                     $('#inputName,#inputDescription').removeClass('is-valid');
                     $('#createChannelModal').modal("hide");
 
-                    _this.$store.commit('updateCurrentChannel', 'channel' + _this.$store.state.currentGroup.channels[_this.$store.state.currentGroup.channels.length - 1].id);
+                    _this.$store.commit('updateCurrentChannel', 'channel' + response.data.id);
 
                     _this.$store.commit('updateTitle', _this.$store.state.currentGroup.channels[_this.$store.state.currentGroup.channels.length - 1].name);
 
-                    _this.$store.commit('updateChannelDescription', _this.$store.state.currentGroup.channels[_this.$store.state.currentGroup.channels.length - 1].description);
+                    _this.$store.commit('updateChannelDescription', response.data.description);
 
                     _this.$store.commit('assignMessages', []);
 
@@ -44789,8 +44789,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "m-2" }, [
+    return _c("div", { staticClass: "mx-2" }, [
       _c("img", {
+        staticClass: "rounded-circle",
         attrs: {
           src: __webpack_require__("./public/img/img_avatar1.png"),
           alt: "Avartar"
@@ -63067,6 +63068,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
         },
         toggleIsDataStillFetching: function toggleIsDataStillFetching(state) {
             state.isDataStillFetching = !state.isDataStillFetching;
+        },
+        addChannel: function addChannel(state, channelId) {
+            state.currentGroup.channels.push(channelId);
         },
         removeChannel: function removeChannel(state, channelId) {
             state.currentGroup.channels = state.currentGroup.channels.filter(function (c) {

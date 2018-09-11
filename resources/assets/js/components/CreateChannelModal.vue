@@ -81,19 +81,19 @@
                         description: this.description,
                         group_id: this.$store.state.currentGroup.id
                     }).then(response => {
-                        this.$store.commit('updateCurrentGroup', response.data)
+                        this.$store.commit('addChannel', response.data)
                   		this.isChannelCreating = false
                   		this.name = ''
         				this.description = ''
         				$('#inputName,#inputDescription').removeClass('is-valid')
                   		$('#createChannelModal').modal("hide")
 
-                    	this.$store.commit('updateCurrentChannel', 'channel'+this.$store.state.currentGroup.channels[(this.$store.state.currentGroup.channels).length-1].id)
+                    	this.$store.commit('updateCurrentChannel', 'channel'+response.data.id)
 
                     	this.$store.commit('updateTitle', this.$store.state.currentGroup.channels[(this.$store.state.currentGroup.channels).length-1].name)
 
                     	this.$store.commit('updateChannelDescription', 
-                                this.$store.state.currentGroup.channels[(this.$store.state.currentGroup.channels).length-1].description)
+                                response.data.description)
                     	
                     	this.$store.commit('assignMessages', [])
 

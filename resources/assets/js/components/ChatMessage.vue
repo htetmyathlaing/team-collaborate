@@ -1,8 +1,8 @@
  <template>
     <div class="container">
     	<div class="row">
-    		<div class="m-2">
-    			<img src="../../../../public/img/img_avatar1.png" alt="Avartar">
+    		<div class="mx-2">
+    			<img src="../../../../public/img/img_avatar1.png" alt="Avartar" class="rounded-circle">
     		</div>
     		<div class="col-10">
     			<span class="text-primary">{{ message.user.name }}</span>

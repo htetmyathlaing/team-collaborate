@@ -73,7 +73,7 @@ class ChannelController extends Controller
 
         Notification::send($users, new AppNotification($notification));
 
-        return Group::with('channels')->with('users')->find($channel->group_id);
+        return $channel;
     }
 
     /**

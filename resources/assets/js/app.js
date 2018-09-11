@@ -163,6 +163,9 @@ const store = new Vuex.Store({
     toggleIsDataStillFetching(state){
         state.isDataStillFetching = ! state.isDataStillFetching
     },
+    addChannel (state, channelId) {
+        state.currentGroup.channels.push(channelId)
+    },
     removeChannel (state, channelId) {
         state.currentGroup.channels = state.currentGroup.channels.filter(c => c.id != channelId)
     },
