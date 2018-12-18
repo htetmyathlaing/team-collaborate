@@ -102,6 +102,13 @@ class NoteController extends Controller
     {
         $note->content = $request->input('content');
         $note->save();
+        $users = Group::with('users')->find($note->group_id)->users;
+        $notification = [
+            'user' => Auth::user()->name,
+            'group'  => $group_id,
+            'action' => "edit $note->title from the notes",
+        ];
+        Notification::send($users, new AppNotification($notification));
     }
 
     /**
@@ -112,17 +119,27 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-         $users = Group::with('users')->find($note->group_id)->users;
+        if($note->user_id == Auth::id() || Group::find($note->group_id)->user->id == Auth::id()){
+            $users = Group::with('users')->find($note->group_id)->users;
 
-        $notification = [
-            'user' => Auth::user()->name,
-            'group'  => $note->group_id,
-            'action' => "delete $note->title from the notes",
-        ];
+            $notification = [
+                'user' => Auth::user()->name,
+                'group'  => $note->group_id,
+                'action' => "delete $note->title from the notes",
+            ];
 
-        $note->delete();
+            $note->delete();
 
-        Notification::send($users, new AppNotification($notification));
+            Notification::send($users, new AppNotification($notification));
+        }
+        else{
+            $notification = [
+                'user' => Auth::user()->name,
+                'group'  => $note->group_id,
+                'action' => ",you are to authorized to delete the note",
+            ];
+            Auth::user()->notify(new AppNotification($notification));
+        }
     }
 
     /**

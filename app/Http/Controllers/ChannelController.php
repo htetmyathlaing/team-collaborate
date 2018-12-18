@@ -118,49 +118,58 @@ class ChannelController extends Controller
      */
     public function destroy($group_id, $id)
     {
-        if($id[0]=='c'){
-            $id = (int)filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-            $type = 'channel';
-            if(sizeof(Channel::where('group_id', $group_id)->get()) == 1){
-                $notification = [
-                    'user' => Auth::user()->name,
-                    'group'  => $group_id,
-                    'action' => ",you cannot delete the last channel",
-                ];
-                Auth::user()->notify(new AppNotification($notification));
-                return 'false';
+        if(Group::find($group_id)->user->id == Auth::user()->id ){
+            if($id[0]=='c'){
+                $id = (int)filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+                $type = 'channel';
+                if(sizeof(Channel::where('group_id', $group_id)->get()) == 1){
+                    $notification = [
+                        'user' => Auth::user()->name,
+                        'group'  => $group_id,
+                        'action' => ",you cannot delete the last channel",
+                    ];
+                    Auth::user()->notify(new AppNotification($notification));
+                    return 'false';
+                }
+                else {
+                    $users = Group::with('users')->find($group_id)->users;
+                    $notification = [
+                        'user' => Auth::user()->name,
+                        'group'  => $group_id,
+                        'action' => "deleted the ".Channel::find($id)->name." channel",
+                    ];
+                    Channel::destroy($id);
+                    Message::where('channel_id', $id)->delete();
+                    
+                    Notification::send($users, new AppNotification($notification));
+                }
             }
-            else {
+            else{
+                $id = (int)filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+                $type= 'user';
+                DB::delete('delete from group_user where group_id = ? and user_id  = ?', [$group_id, $id]);
+                Message::where('user_id', $id)->orWhere('to_user_id', $id)->delete();
+
+                Channel::destroy($id);
+                Message::where('channel_id', $id)->delete();
+
                 $users = Group::with('users')->find($group_id)->users;
                 $notification = [
                     'user' => Auth::user()->name,
                     'group'  => $group_id,
-                    'action' => "deleted the ".Channel::find($id)->name." channel",
+                    'action' => "remove ".User::find($id)->name." from the group",
                 ];
-                Channel::destroy($id);
-                Message::where('channel_id', $id)->delete();
-                
                 Notification::send($users, new AppNotification($notification));
+
             }
+            return json_encode(['type' => $type, 'id' => $id]);
         }
-        else{
-            $id = (int)filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-            $type= 'user';
-            DB::delete('delete from group_user where group_id = ? and user_id  = ?', [$group_id, $id]);
-            Message::where('user_id', $id)->orWhere('to_user_id', $id)->delete();
-
-            Channel::destroy($id);
-            Message::where('channel_id', $id)->delete();
-
-            $users = Group::with('users')->find($group_id)->users;
-            $notification = [
-                'user' => Auth::user()->name,
-                'group'  => $group_id,
-                'action' => "remove ".User::find($id)->name." from the group",
-            ];
-            Notification::send($users, new AppNotification($notification));
-
-        }
-        return json_encode(['type' => $type, 'id' => $id]);
+        $notification = [
+            'user' => Auth::user()->name,
+            'group'  => $group_id,
+            'action' => $id[0]=='c' ? ",you are to authorized to delete the channel" : ",you are to authorized to remove the user",
+        ];
+        Auth::user()->notify(new AppNotification($notification));
+        return 'false';
     }
 }

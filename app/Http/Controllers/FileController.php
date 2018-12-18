@@ -111,18 +111,28 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        $users = Group::with('users')->find($file->group_id)->users;
+        if($file->user_id == Auth::id() || Group::find($file->group_id)->user->id == Auth::id()){
+            $users = Group::with('users')->find($file->group_id)->users;
 
-        $notification = [
-            'user' => Auth::user()->name,
-            'group'  => $file->group_id,
-            'action' => "remove $file->file_title from the group",
-        ];
+            $notification = [
+                'user' => Auth::user()->name,
+                'group'  => $file->group_id,
+                'action' => "remove $file->file_title from the group",
+            ];
 
-        Storage::delete('public\/files\/'.$file->file_name);
-        $file->delete();
+            Storage::delete('public\/files\/'.$file->file_name);
+            $file->delete();
 
-        Notification::send($users, new AppNotification($notification));
+            Notification::send($users, new AppNotification($notification));
+        }
+        else{
+            $notification = [
+                'user' => Auth::user()->name,
+                'group'  => $file->group_id,
+                'action' => ",you are to authorized to delete the file",
+            ];
+            Auth::user()->notify(new AppNotification($notification));
+        }
     }
 
     /**

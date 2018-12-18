@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AppNotification;
 use App\User;
 use App\Message;
 use App\Group;
@@ -100,19 +102,29 @@ class GroupController extends Controller
     {
         $group = Group::find($id);
         if($group){
-            Group::destroy($id);
-            Channel::where('group_id', $id)->delete();
-            Message::where('group_id', $id)->delete();
-            Note::where('group_id', $id)->delete();
-            DB::table('group_user')->where('group_id', $id)->delete();
+            if($group->user->id == Auth::user()->id ){
+                Group::destroy($id);
+                Channel::where('group_id', $id)->delete();
+                Message::where('group_id', $id)->delete();
+                Note::where('group_id', $id)->delete();
+                DB::table('group_user')->where('group_id', $id)->delete();
 
-            $files = File::where('group_id', $id)->get();
-            foreach ($files as $file) {
-                Storage::delete('public\/files\/'.$file->file_name);
-                File::find($file->id)->delete();  
+                $files = File::where('group_id', $id)->get();
+                foreach ($files as $file) {
+                    Storage::delete('public\/files\/'.$file->file_name);
+                    File::find($file->id)->delete();  
+                }
+                return "true";
             }
+            $notification = [
+                'user' => Auth::user()->name,
+                'group'  => $id,
+                'action' => ",you are to authorized to delete the group ".$group->name,
+            ];
+            Auth::user()->notify(new AppNotification($notification));
+            return 'false';
         }
-        return "true";
+        return "false";
     }
 
     /**

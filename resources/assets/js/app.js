@@ -185,9 +185,9 @@ const app = new Vue({
     data:{
     },
     computed:{
-        currentGroup(){
-            return store.state.currentGroup
-        }
+        // currentGroup(){
+        //     return store.state.currentGroup
+        // }
     },
     created(){
     },

@@ -59,6 +59,11 @@
         .mm-text{
             font-family: 'Padauk', sans-serif;
         }
+
+        @media only screen  and (max-width : 1224px) {
+        /* Styles */
+        }
+
     </style>
     <script>
         var groupId = {!! $group_id !!}    </script>
