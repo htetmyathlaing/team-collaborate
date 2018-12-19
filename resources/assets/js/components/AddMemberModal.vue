@@ -42,30 +42,34 @@
                         email: this.email,
                         group_id: this.$store.state.currentGroup.id
                     }).then(response => {
-                       	if(response.data == 'not found'){
-                       		$('#inputEmail').toggleClass('is-invalid')
-                       		this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူကို ရှာမတွေ့ပါ။'
-                       	}
-                        else if(response.data == 'exit'){
-                            $('#inputEmail').toggleClass('is-invalid')
-                            this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူသည် အဖွဲ့တွင် ပါဝင်ပြီးဖြစ်သည်။'
+                        if(response.data){
+                           	if(response.data == 'not found'){
+                           		$('#inputEmail').toggleClass('is-invalid')
+                           		this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူကို ရှာမတွေ့ပါ။'
+                           	}
+                            else if(response.data == 'exit'){
+                                $('#inputEmail').toggleClass('is-invalid')
+                                this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူသည် အဖွဲ့တွင် ပါဝင်ပြီးဖြစ်သည်။'
+                            }
+                           	else{
+    	                  		$('#inputEmail').removeClass('is-valid')
+    	                  		this.$store.commit('addUser', response.data)
+    	                  		this.$store.commit('updateTitle', response.data.name)
+    		                    this.$store.commit('updateCurrentChannel', 'user'+response.data.id)
+
+    		                    this.$store.commit('updateChannelDescription', 'This is private chat.')
+
+    		                    axios.get('/getmessages/'+this.$store.state.currentChannel).then(response => {
+    		                            this.$store.commit('assignMessages', response.data.messages)
+    		                            this.isMemberAdding = false
+    		                        }) 
+    	                  		$('#addMemberModal').modal("hide")
+                                this.email = ''
+    		                	$('.list-item').attr("class","list-item")
+                           	}
+                            return
                         }
-                       	else{
-	                  		$('#inputEmail').removeClass('is-valid')
-	                  		this.$store.commit('addUser', response.data)
-	                  		this.$store.commit('updateTitle', response.data.name)
-		                    this.$store.commit('updateCurrentChannel', 'user'+response.data.id)
-
-		                    this.$store.commit('updateChannelDescription', 'This is private chat.')
-
-		                    axios.get('/getmessages/'+this.$store.state.currentChannel).then(response => {
-		                            this.$store.commit('assignMessages', response.data.messages)
-		                            this.isMemberAdding = false
-		                        }) 
-	                  		$('#addMemberModal').modal("hide")
-                            this.email = ''
-		                	$('.list-item').attr("class","list-item")
-                       	}
+                        $('#addMemberModal').modal("hide")
                     }) 
         		}
         	},

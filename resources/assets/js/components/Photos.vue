@@ -47,6 +47,13 @@
 					class="list-group-item list-group-item-action list-group-item-info" 
 					@mouseenter="mouseOverList"
 					@click="view">
+					<!-- <a data-fancybox="gallery" :href="item.file_name" style="text-decoration: none;">
+				        <img :src="item.file_name" class="img-fluid photo-list-item" :alt="item.file_name">
+				    
+				        <div class="text-center">
+				            <span>{{ item.file_name }}</span>
+				        </div>
+			        </a> -->
 					<div class="row" :data-id="item.id">
 						<span class="ml-3 col-8" :data-id="item.id">{{ item.file_title }}</span>
 						<span class="col-2 text-muted">Uploaded by - {{ item.user.name }}</span>
@@ -65,14 +72,14 @@
 		</ul>
 
 		<!-- View Files -->
-		<div v-show="viewing" class="card mt-3">
+		<!-- <div v-show="viewing" class="card mt-3">
 			<span class="far fa-2x fa-arrow-alt-circle-left m-3 back-arrow" 
 				@click="viewing=false">
 			</span>
   			<div class="card-body scroll-view">
   				<img ref="img" src="" width="100%" />
   			</div>
-		</div>
+		</div> -->
 
 		<!-- Delete Files -->
 		<div class="modal fade mt-5" id="deleteFileModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -160,7 +167,7 @@
         		this.selectedId = event.target.dataset['id']
         	},
         	view(){
-        		this.viewing = true
+        		// this.viewing = true
         		this.selectedId = event.target.dataset['id']
         		axios.get('/files/'+ this.selectedId).then(response => {
         			//  this.$refs.title.innerHTML = this.selectedId
@@ -219,6 +226,10 @@
 	   opacity: 0;
 	   transform: translateX(5px);
 	}
+	.photo-list-item{
+    	height: 65px !important;
+    	width: 65px !important;
+    }
 	.uploading-text:after {
 	    content: "ဖိုင်ကို တင်နေသည်";
 	    font-weight: bold;

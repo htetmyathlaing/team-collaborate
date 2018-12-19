@@ -2034,28 +2034,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     email: this.email,
                     group_id: this.$store.state.currentGroup.id
                 }).then(function (response) {
-                    if (response.data == 'not found') {
-                        $('#inputEmail').toggleClass('is-invalid');
-                        _this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူကို ရှာမတွေ့ပါ။';
-                    } else if (response.data == 'exit') {
-                        $('#inputEmail').toggleClass('is-invalid');
-                        _this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူသည် အဖွဲ့တွင် ပါဝင်ပြီးဖြစ်သည်။';
-                    } else {
-                        $('#inputEmail').removeClass('is-valid');
-                        _this.$store.commit('addUser', response.data);
-                        _this.$store.commit('updateTitle', response.data.name);
-                        _this.$store.commit('updateCurrentChannel', 'user' + response.data.id);
+                    if (response.data) {
+                        if (response.data == 'not found') {
+                            $('#inputEmail').toggleClass('is-invalid');
+                            _this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူကို ရှာမတွေ့ပါ။';
+                        } else if (response.data == 'exit') {
+                            $('#inputEmail').toggleClass('is-invalid');
+                            _this.feedback = 'သင်ထည့်သွင်းသော Email ဖြင့် အသုံးပြုသူသည် အဖွဲ့တွင် ပါဝင်ပြီးဖြစ်သည်။';
+                        } else {
+                            $('#inputEmail').removeClass('is-valid');
+                            _this.$store.commit('addUser', response.data);
+                            _this.$store.commit('updateTitle', response.data.name);
+                            _this.$store.commit('updateCurrentChannel', 'user' + response.data.id);
 
-                        _this.$store.commit('updateChannelDescription', 'This is private chat.');
+                            _this.$store.commit('updateChannelDescription', 'This is private chat.');
 
-                        axios.get('/getmessages/' + _this.$store.state.currentChannel).then(function (response) {
-                            _this.$store.commit('assignMessages', response.data.messages);
-                            _this.isMemberAdding = false;
-                        });
-                        $('#addMemberModal').modal("hide");
-                        _this.email = '';
-                        $('.list-item').attr("class", "list-item");
+                            axios.get('/getmessages/' + _this.$store.state.currentChannel).then(function (response) {
+                                _this.$store.commit('assignMessages', response.data.messages);
+                                _this.isMemberAdding = false;
+                            });
+                            $('#addMemberModal').modal("hide");
+                            _this.email = '';
+                            $('.list-item').attr("class", "list-item");
+                        }
+                        return;
                     }
+                    $('#addMemberModal').modal("hide");
                 });
             }
         },
@@ -2917,10 +2921,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.deleting = true;
             axios.delete('/groups/' + this.currentGroup.id).then(function (response) {
-                console.log(response.data);
-                _this.deleting = false;
-                $('#deleteGroupModal').hide();
-                location.href = '/home';
+                if (response.data) {
+                    _this.deleting = false;
+                    $('#deleteGroupModal').hide();
+                    location.href = '/home';
+                    return;
+                }
+                $('#deleteGroupModal').modal("hide");
             });
         }
     }
@@ -3366,6 +3373,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -3435,7 +3449,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         view: function view() {
             var _this3 = this;
 
-            this.viewing = true;
+            // this.viewing = true
             this.selectedId = event.target.dataset['id'];
             axios.get('/files/' + this.selectedId).then(function (response) {
                 //  this.$refs.title.innerHTML = this.selectedId
@@ -7930,7 +7944,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -8035,7 +8049,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.back-arrow[data-v-ec041610]:hover{\n\t\tcursor: pointer;\n\t\tcolor: #007bff;\n\t\t-webkit-transform: scale(1.01, 1.01);\n\t\t        transform: scale(1.01, 1.01);\n        -webkit-transition: -webkit-transform .1s;\n        transition: -webkit-transform .1s;\n        transition: transform .1s;\n        transition: transform .1s, -webkit-transform .1s;\n        -webkit-transform: translateX(-1px);\n                transform: translateX(-1px);\n}\n.scroll-view[data-v-ec041610]{\n        overflow-y: scroll;\n        height: 70vh;\n        font-family: 'Raleway';\n}\n.delete-button[data-v-ec041610]{\n    \tdisplay: block;\n}\n.list-group-item[data-v-ec041610]{\n    \tmargin-top: 3px;\n}\n.list-group-item[data-v-ec041610]:hover{\n    \tcursor: pointer;\n}\n.list-complete-item[data-v-ec041610] {\n\t    -webkit-transition: all 0.5s;\n\t    transition: all 0.5s;\n}\n.list-enter-active[data-v-ec041610], .list-leave-active[data-v-ec041610] {\n\t   -webkit-transition: all 0.5s;\n\t   transition: all 0.5s;\n}\n.list-enter[data-v-ec041610], .list-leave-to[data-v-ec041610]{\n\t   opacity: 0;\n\t   -webkit-transform: translateX(5px);\n\t           transform: translateX(5px);\n}\n.uploading-text[data-v-ec041610]:after {\n\t    content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A\";\n\t    font-weight: bold;\n\t    font-style: italic;\n\t    color: #28a745;\n\t    -webkit-animation-name: saving-text-data-v-ec041610;\n\t            animation-name: saving-text-data-v-ec041610;\n\t    -webkit-animation-duration: 1s;\n\t            animation-duration: 1s;\n\t    -webkit-animation-iteration-count: infinite;\n\t            animation-iteration-count: infinite;\n}\n@-webkit-keyframes saving-text-data-v-ec041610 {\n0% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes saving-text-data-v-ec041610 {\n0% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n.deleting-text[data-v-ec041610]:after {\n\t    content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n\t    font-weight: bold;\n\t    font-style: italic;\n\t    color: red;\n\t    -webkit-animation-name: deleting-text-data-v-ec041610;\n\t            animation-name: deleting-text-data-v-ec041610;\n\t    -webkit-animation-duration: 1s;\n\t            animation-duration: 1s;\n\t    -webkit-animation-iteration-count: infinite;\n\t            animation-iteration-count: infinite;\n}\n@-webkit-keyframes deleting-text-data-v-ec041610 {\n0% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes deleting-text-data-v-ec041610 {\n0% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n", ""]);
+exports.push([module.i, "\n.back-arrow[data-v-ec041610]:hover{\n\t\tcursor: pointer;\n\t\tcolor: #007bff;\n\t\t-webkit-transform: scale(1.01, 1.01);\n\t\t        transform: scale(1.01, 1.01);\n        -webkit-transition: -webkit-transform .1s;\n        transition: -webkit-transform .1s;\n        transition: transform .1s;\n        transition: transform .1s, -webkit-transform .1s;\n        -webkit-transform: translateX(-1px);\n                transform: translateX(-1px);\n}\n.scroll-view[data-v-ec041610]{\n        overflow-y: scroll;\n        height: 70vh;\n        font-family: 'Raleway';\n}\n.delete-button[data-v-ec041610]{\n    \tdisplay: block;\n}\n.list-group-item[data-v-ec041610]{\n    \tmargin-top: 3px;\n}\n.list-group-item[data-v-ec041610]:hover{\n    \tcursor: pointer;\n}\n.list-complete-item[data-v-ec041610] {\n\t    -webkit-transition: all 0.5s;\n\t    transition: all 0.5s;\n}\n.list-enter-active[data-v-ec041610], .list-leave-active[data-v-ec041610] {\n\t   -webkit-transition: all 0.5s;\n\t   transition: all 0.5s;\n}\n.list-enter[data-v-ec041610], .list-leave-to[data-v-ec041610]{\n\t   opacity: 0;\n\t   -webkit-transform: translateX(5px);\n\t           transform: translateX(5px);\n}\n.photo-list-item[data-v-ec041610]{\n    \theight: 65px !important;\n    \twidth: 65px !important;\n}\n.uploading-text[data-v-ec041610]:after {\n\t    content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A\";\n\t    font-weight: bold;\n\t    font-style: italic;\n\t    color: #28a745;\n\t    -webkit-animation-name: saving-text-data-v-ec041610;\n\t            animation-name: saving-text-data-v-ec041610;\n\t    -webkit-animation-duration: 1s;\n\t            animation-duration: 1s;\n\t    -webkit-animation-iteration-count: infinite;\n\t            animation-iteration-count: infinite;\n}\n@-webkit-keyframes saving-text-data-v-ec041610 {\n0% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes saving-text-data-v-ec041610 {\n0% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1010\\1004\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n.deleting-text[data-v-ec041610]:after {\n\t    content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n\t    font-weight: bold;\n\t    font-style: italic;\n\t    color: red;\n\t    -webkit-animation-name: deleting-text-data-v-ec041610;\n\t            animation-name: deleting-text-data-v-ec041610;\n\t    -webkit-animation-duration: 1s;\n\t            animation-duration: 1s;\n\t    -webkit-animation-iteration-count: infinite;\n\t            animation-iteration-count: infinite;\n}\n@-webkit-keyframes deleting-text-data-v-ec041610 {\n0% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n@keyframes deleting-text-data-v-ec041610 {\n0% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A\";\n}\n10% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   .\";\n}\n20% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . .\";\n}\n30% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . \";\n}\n40% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . .\";\n}\n50% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . .\";\n}\n60% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . .\";\n}\n70% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . .\";\n}\n80% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . .\";\n}\n90% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . .\";\n}\n100% {\n\t      content: \"\\1016\\102D\\102F\\1004\\103A\\1000\\102D\\102F   \\1016\\103B\\1000\\103A\\1014\\1031\\101E\\100A\\103A   . . . . . . . . . .\";\n}\n}\n", ""]);
 
 // exports
 
@@ -47353,35 +47367,6 @@ var render = function() {
     _c(
       "div",
       {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.viewing,
-            expression: "viewing"
-          }
-        ],
-        staticClass: "card mt-3"
-      },
-      [
-        _c("span", {
-          staticClass: "far fa-2x fa-arrow-alt-circle-left m-3 back-arrow",
-          on: {
-            click: function($event) {
-              _vm.viewing = false
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body scroll-view" }, [
-          _c("img", { ref: "img", attrs: { src: "", width: "100%" } })
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
         staticClass: "modal fade mt-5",
         attrs: {
           id: "deleteFileModal",
@@ -63094,9 +63079,9 @@ var app = new Vue({
     router: router,
     data: {},
     computed: {
-        currentGroup: function currentGroup() {
-            return store.state.currentGroup;
-        }
+        // currentGroup(){
+        //     return store.state.currentGroup
+        // }
     },
     created: function created() {},
     mounted: function mounted() {

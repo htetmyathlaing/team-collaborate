@@ -118,10 +118,13 @@
             deleteGroup: function(event){
                 this.deleting = true
                 axios.delete('/groups/'+this.currentGroup.id).then(response => {
-                    console.log(response.data)
-                    this.deleting = false
-                    $('#deleteGroupModal').hide()
-                    location.href='/home'
+                    if(response.data){
+                        this.deleting = false
+                        $('#deleteGroupModal').hide()
+                        location.href='/home'
+                        return
+                    }
+                    $('#deleteGroupModal').modal("hide")
                 }) 
             }
         },

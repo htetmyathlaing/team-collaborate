@@ -50,31 +50,40 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where('email', $request->input('email'))->first();
-        if($user){
-            $role = DB::table('group_user')
-                    ->select('id')
-                    ->where('user_id', $user->id)
-                    ->where('group_id', $request->input('group_id'))
-                    ->get();
-            if(!sizeof($role)){
-                DB::insert('insert into group_user (user_id, group_id) values (?, ?)', [$user->id, $request->input('group_id')]);
+        if(Group::find($request->input('group_id'))->user->id == Auth::user()->id ){
+            $user = User::where('email', $request->input('email'))->first();
+            if($user){
+                $role = DB::table('group_user')
+                        ->select('id')
+                        ->where('user_id', $user->id)
+                        ->where('group_id', $request->input('group_id'))
+                        ->get();
+                if(!sizeof($role)){
+                    DB::insert('insert into group_user (user_id, group_id) values (?, ?)', [$user->id, $request->input('group_id')]);
 
-                $users = Group::with('users')->find($request->input('group_id'))->users;
-                $notification = [
-                    'user' => Auth::user()->name,
-                    'group'  => $request->input('group_id'),
-                    'action' => "added $user->name to ".Group::find($request->input('group_id'))->name,
-                ];
+                    $users = Group::with('users')->find($request->input('group_id'))->users;
+                    $notification = [
+                        'user' => Auth::user()->name,
+                        'group'  => $request->input('group_id'),
+                        'action' => "added $user->name to ".Group::find($request->input('group_id'))->name,
+                    ];
 
-                Notification::send($users, new AppNotification($notification));
-                return $user;
+                    Notification::send($users, new AppNotification($notification));
+                    return $user;
+                }
+                else
+                    return "exit";
             }
             else
-                return "exit";
+                return "not found";
         }
-        else
-            return "not found";
+        $notification = [
+            'user' => Auth::user()->name,
+            'group'  => $request->input('group_id'),
+            'action' => ",you are not authorized to add new member",
+        ];
+        Auth::user()->notify(new AppNotification($notification));
+        return 'false';
     }
 
     /**

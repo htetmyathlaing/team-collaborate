@@ -52,28 +52,37 @@ class ChannelController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name'=>'required',
-            'description'=>'required',
-            'group_id'=>'required'
-        ]);
-        
-        $channel = new Channel();
-        $channel->name = '#'.strtolower($request->input('name'));
-        $channel->description = $request->input('description');
-        $channel->group_id = $request->input('group_id');
-        $channel->save();
+        if(Group::find($request->input('group_id'))->user->id == Auth::user()->id ){
+            $this->validate($request, [
+                'name'=>'required',
+                'description'=>'required',
+                'group_id'=>'required'
+            ]);
+            
+            $channel = new Channel();
+            $channel->name = '#'.strtolower($request->input('name'));
+            $channel->description = $request->input('description');
+            $channel->group_id = $request->input('group_id');
+            $channel->save();
 
-        $users = Group::with('users')->find($channel->group_id)->users;
+            $users = Group::with('users')->find($channel->group_id)->users;
+            $notification = [
+                'user' => Auth::user()->name,
+                'group'  => $channel->group_id,
+                'action' => "created the $channel->name channel",
+            ];
+
+            Notification::send($users, new AppNotification($notification));
+
+            return $channel;
+        }
         $notification = [
             'user' => Auth::user()->name,
-            'group'  => $channel->group_id,
-            'action' => "created the $channel->name channel",
+            'group'  => $request->input('group_id'),
+            'action' => ",you are not authorized to create new channel",
         ];
-
-        Notification::send($users, new AppNotification($notification));
-
-        return $channel;
+        Auth::user()->notify(new AppNotification($notification));
+        return 'false';
     }
 
     /**
@@ -167,7 +176,7 @@ class ChannelController extends Controller
         $notification = [
             'user' => Auth::user()->name,
             'group'  => $group_id,
-            'action' => $id[0]=='c' ? ",you are to authorized to delete the channel" : ",you are to authorized to remove the user",
+            'action' => $id[0]=='c' ? ",you are not authorized to delete the channel" : ",you are to authorized to remove the member",
         ];
         Auth::user()->notify(new AppNotification($notification));
         return 'false';

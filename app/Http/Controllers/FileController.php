@@ -129,7 +129,7 @@ class FileController extends Controller
             $notification = [
                 'user' => Auth::user()->name,
                 'group'  => $file->group_id,
-                'action' => ",you are to authorized to delete the file",
+                'action' => ",you are not authorized to delete the file",
             ];
             Auth::user()->notify(new AppNotification($notification));
         }

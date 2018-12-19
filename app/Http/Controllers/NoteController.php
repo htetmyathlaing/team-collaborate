@@ -136,7 +136,7 @@ class NoteController extends Controller
             $notification = [
                 'user' => Auth::user()->name,
                 'group'  => $note->group_id,
-                'action' => ",you are to authorized to delete the note",
+                'action' => ",you are not authorized to delete the note",
             ];
             Auth::user()->notify(new AppNotification($notification));
         }

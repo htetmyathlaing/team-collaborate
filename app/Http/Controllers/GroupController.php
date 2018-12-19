@@ -119,7 +119,7 @@ class GroupController extends Controller
             $notification = [
                 'user' => Auth::user()->name,
                 'group'  => $id,
-                'action' => ",you are to authorized to delete the group ".$group->name,
+                'action' => ",you are not authorized to delete the group ".$group->name,
             ];
             Auth::user()->notify(new AppNotification($notification));
             return 'false';
