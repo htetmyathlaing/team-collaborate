@@ -4,7 +4,7 @@
         	type="button"
             class="btn btn-success btn-circle m-3"
             data-toggle="modal"
-            data-placement="right" 
+            data-placement="right"
             title="ဓာတ်ပုံအသစ်တင်ရန်"
             @click="choosing=true">
             <span class="fas fa-plus"></span>
@@ -14,15 +14,15 @@
         <div v-show="choosing" class="form-group row mm-text">
 			<label for="inputFile" class="col-sm-2 col-form-label text-right">ဖိုင်ရွေးရန်</label>
 			<div class="col-sm-3">
-				<input type="file" 
-					class="form-control-file" 
+				<input type="file"
+					class="form-control-file"
 					id="inputFile"
 					accept="image/*"
 					ref="file"
 					@change="processFile">
 				<span class="invalid-feedback" role="alert">
                     <strong>ဖိုင်ဆိုဒ် 100MB ထက်ကျော်လွန်၍ မရပါ။ </strong>
-                </span> 
+                </span>
         		<span v-show="uploading" class='uploading-text  mm-text'></span>
 			</div>
 			<a class="btn btn-success text-white col-sm-2 align-middle"
@@ -36,20 +36,21 @@
 		</div>
 
 		<!-- List Files -->
-	    <ul v-show="!viewing" 
-	    	class="list-group scroll-view  mm-text" 
+	    <ul v-show="!viewing"
+	    	class="list-group scroll-view  mm-text"
 	    	@mouseleave="mouseOutOfLists">
 	    	<p v-if="!files.length" class="mm-text">မည်သည့်ဖိုင်မျှတင်ထားခြင်းမရှိသေးပါ။ ဖိုင်အသစ်များ တင်နိုင်ပါသည်။</p>
 	    	<transition-group name="list">
-				<li v-for="(item,index) in files" 
+				<li v-for="(item,index) in files"
 					:key="index"
 					:data-id="item.id"
-					class="list-group-item list-group-item-action list-group-item-info" 
+					class="list-group-item list-group-item-action list-group-item-info"
 					@mouseenter="mouseOverList"
 					@click="view">
+					<!-- Need to change to FacyBox -->
 					<!-- <a data-fancybox="gallery" :href="item.file_name" style="text-decoration: none;">
 				        <img :src="item.file_name" class="img-fluid photo-list-item" :alt="item.file_name">
-				    
+
 				        <div class="text-center">
 				            <span>{{ item.file_name }}</span>
 				        </div>
@@ -60,9 +61,9 @@
 						<div class="ml-auto delete-button mr-3" :data-id="item.id">
 	            			<span class="fas fa-lg fa-trash-alt text-danger ml-3"
 	            				:data-id="item.id"
-								data-toggle="modal" 
+								data-toggle="modal"
                             	data-target="#deleteFileModal"
-	    						data-placement="top" 
+	    						data-placement="top"
 	            				title="ဖျက်ရန်"
 	            				@click="select"></span>
 						</div>
@@ -72,14 +73,14 @@
 		</ul>
 
 		<!-- View Files -->
-		<!-- <div v-show="viewing" class="card mt-3">
-			<span class="far fa-2x fa-arrow-alt-circle-left m-3 back-arrow" 
+		<div v-show="viewing" class="card mt-3">
+			<span class="far fa-2x fa-arrow-alt-circle-left m-3 back-arrow"
 				@click="viewing=false">
 			</span>
   			<div class="card-body scroll-view">
   				<img ref="img" src="" width="100%" />
   			</div>
-		</div> -->
+		</div>
 
 		<!-- Delete Files -->
 		<div class="modal fade mt-5" id="deleteFileModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -90,7 +91,7 @@
 		      		</div>
 		      		<div class="modal-body">
 						ဤမှတ်စုကို ဖျက်ပါလိမ့်မည်။
-						
+
 				        <div v-show="deleting" class='deleting-text  mm-text'></div>
 		      		</div>
 		      		<div class="modal-footer">
@@ -142,13 +143,13 @@
         		let formData = new FormData();
         		formData.append('file', this.file);
         		formData.append('group_id', this.$store.state.currentGroup.id);
-        		axios.post('/files', 
+        		axios.post('/files',
         			formData,
         			{
     					headers: {
         					'Content-Type': 'multipart/form-data'
         				}
-    				}).then(response => { 
+    				}).then(response => {
     					if(response.data == 'false'){
     						$('#inputFile').addClass('is-invalid')
     						return
@@ -157,17 +158,17 @@
         				this.uploading = false
         				this.choosing = false
         				this.file = ''
-	            }) 
+	            })
         	},
         	cancle(){
         		this.choosing = false
         		$('#inputFile').removeClass('is-invalid')
-        	},	
+        	},
         	select(event){
         		this.selectedId = event.target.dataset['id']
         	},
         	view(){
-        		// this.viewing = true
+        		this.viewing = true
         		this.selectedId = event.target.dataset['id']
         		axios.get('/files/'+ this.selectedId).then(response => {
         			//  this.$refs.title.innerHTML = this.selectedId
@@ -181,8 +182,8 @@
         			this.selectedId = ''
 	        		this.deleting = false
 	        		this.viewing=false
-              		$('#deleteFileModal').modal("hide") 
-        		}) 
+              		$('#deleteFileModal').modal("hide")
+        		})
         	},
         	mouseOverList: function(event){
         		$(".delete-button").css('display','none')

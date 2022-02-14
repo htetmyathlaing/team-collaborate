@@ -3380,6 +3380,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -3449,7 +3450,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         view: function view() {
             var _this3 = this;
 
-            // this.viewing = true
+            this.viewing = true;
             this.selectedId = event.target.dataset['id'];
             axios.get('/files/' + this.selectedId).then(function (response) {
                 //  this.$refs.title.innerHTML = this.selectedId
@@ -47362,6 +47363,35 @@ var render = function() {
         )
       ],
       1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.viewing,
+            expression: "viewing"
+          }
+        ],
+        staticClass: "card mt-3"
+      },
+      [
+        _c("span", {
+          staticClass: "far fa-2x fa-arrow-alt-circle-left m-3 back-arrow",
+          on: {
+            click: function($event) {
+              _vm.viewing = false
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body scroll-view" }, [
+          _c("img", { ref: "img", attrs: { src: "", width: "100%" } })
+        ])
+      ]
     ),
     _vm._v(" "),
     _c(
